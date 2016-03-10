@@ -1,8 +1,30 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
+    <color name="SplashBackground">#F0F0F0</color>
+
+    <color name="ActionBarBackground">#22288e</color>
+    <color name="ActionBarBackgroundDarker">#21258e</color>
+    <color name="white">#FFFFFF</color>
+
+
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="colorPrimary">@color/ActionBarBackground</item>
+        <item name="colorPrimaryDark">@color/ActionBarBackgroundDarker</item>
+        <item name="actionMenuTextColor">@color/white</item>
+
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@color/ActionBarBackground</item>
+        <item name="background">@color/ActionBarBackground</item>
+        <item name="titleTextStyle">@style/ActionBarTextStyle</item>
+        <item name="android:subtitleTextStyle">@style/ActionBarTextStyle</item>
+    </style>
+
+    <style name="ActionBarTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

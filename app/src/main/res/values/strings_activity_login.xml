@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_phonenumber">Phone Number</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+
+    <string name="error_invalid_phonenumber">This phone number is invalid</string>
+    <string name="error_invalid_pincode">This pincode is invalid</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_incorrect_credentials">The username or password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+    <string name="successful_login_toast">Logged-in successfully</string>
+</resources>

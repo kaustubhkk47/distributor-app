@@ -1,9 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bazara2z.distributorhelper">
+    package="com.bazara2z.distributorhelper" >
 
-    <application android:allowBackup="true" android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme">
+    <!-- ALL PERMISSIONS -->
 
+
+    <!-- PERMISSIONS FOR INTERNET ACCESS -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- PERMISSIONS FOR SYNC ADAPTER -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <activity
+            android:name=".SplashScreenPackage.SplashScreen"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LoginActivityPackage.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+
+        <provider
+            android:name=".Data.DistributorProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"
+            android:syncable="true" />
+
+        <activity
+            android:name=".MainActivityPackage.MainActivity"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".AddRetailerPackage.AddRetailer"
+            android:label="@string/title_activity_add_retailer"
+            android:parentActivityName=".MainActivityPackage.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivityPackage.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ProductsAndOffersPackage.ProductsAndOffers"
+            android:label="@string/title_activity_products_and_offers"
+            android:parentActivityName=".MainActivityPackage.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivityPackage.MainActivity" />
+        </activity>
+        <activity
+            android:name=".MyOrdersPackage.MyOrders"
+            android:label="@string/title_activity_my_orders"
+            android:parentActivityName=".MainActivityPackage.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivityPackage.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SelectRetailerPackage.SelectRetailer"
+            android:label="@string/title_activity_select_retailer"
+            android:parentActivityName=".MainActivityPackage.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivityPackage.MainActivity" />
+        </activity>
+        <activity
+            android:name=".BuildOrderPackage.BuildOrder"
+            android:label="@string/title_activity_build_order"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
+        </activity>
     </application>
 
 </manifest>

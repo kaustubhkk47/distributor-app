@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_retailer_shop_name">Shop Name</string>
+    <string name="prompt_retailer_address_line1">Address Line 1</string>
+    <string name="prompt_retailer_address_line2">Address Line 2</string>
+    <string name="prompt_retailer_pincode">Pincode</string>
+    <string name="prompt_retailer_phone_number">Phone Number</string>
+
+    <string name="action_add_retailer">Add Retailer</string>
+    <string name="action_confirm_order">Confirm Order</string>
+
+    <string name="location_alert_title">Retailer Location</string>
+    <string name="location_alert_message">Are you currently at retailer location?</string>
+
+    <string name="successful_retailer_added_toast">Retailer successfully added</string>
+</resources>
