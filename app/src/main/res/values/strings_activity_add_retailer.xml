@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="prompt_retailer_shop_name">Shop Name</string>
+    <string name="prompt_retailer_first_name">Name</string>
+    <string name="prompt_retailer_last_name">Last Name</string>
     <string name="prompt_retailer_address_line1">Address Line 1</string>
     <string name="prompt_retailer_address_line2">Address Line 2</string>
+    <string name="prompt_retailer_address">Address</string>
+    <string name="prompt_retailer_landmark">Landmark</string>
     <string name="prompt_retailer_pincode">Pincode</string>
     <string name="prompt_retailer_phone_number">Phone Number</string>
 

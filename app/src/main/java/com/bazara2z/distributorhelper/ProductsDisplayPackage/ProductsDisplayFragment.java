@@ -83,7 +83,7 @@ public class ProductsDisplayFragment extends ListFragment {
 
         Context mContext = getActivity().getApplicationContext();
 
-        String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT, OffersEntry.COLUMN_OFFER_DETAILS};
+        String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT};
 
         Cursor cursor = mContext.getContentResolver().query(ProductsEntry.DISPLAY_URI, columns, null, null, null);
 
@@ -98,7 +98,6 @@ public class ProductsDisplayFragment extends ListFragment {
                 productsDisplayModel = new ProductsDisplayModel();
                 productsDisplayModel.setId(i);
                 productsDisplayModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
-                productsDisplayModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(OffersEntry.COLUMN_OFFER_DETAILS)));
                 productsDisplayModel.setPricePerUnit(cursor.getDouble(cursor.getColumnIndex(ProductsEntry.COLUMN_PRICE_PER_UNIT)));
 
 

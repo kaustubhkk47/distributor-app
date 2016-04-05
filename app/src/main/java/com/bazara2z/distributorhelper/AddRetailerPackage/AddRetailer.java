@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -25,9 +24,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bazara2z.distributorhelper.Data.DistributorContract;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
+import com.bazara2z.distributorhelper.Miscellaneous.MiscellaneousValues;
 import com.bazara2z.distributorhelper.R;
+import com.bazara2z.distributorhelper.SyncAdapter.SyncFunctions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -46,43 +48,58 @@ public class AddRetailer extends AppCompatActivity implements
     public final String LOG_TAG = "AddRetailerActivity";
 
     private EditText mShopName;
+    private EditText mFirstName;
+    private EditText mPhoneNumber;
     private EditText mAddressLine1;
     private EditText mAddressLine2;
+    private EditText mLandmark;
     private EditText mPincode;
-    private EditText mPhoneNumber;
+
+    private String shopName;
+    private String firstName;
+    private String phoneNumber;
+    private String addressLine1;
+    private String addressLine2;
+    private String landmark;
+    private String pincode;
+
+    private int retailerId = 1;
+    int mRetailerEdited = 0;
+
+    private Double latitude = 0.0;
+    private Double longitude = 0.0;
+    private int locationPresent = 0;
+
+    private int uploadSyncStatus = 0;
+
+    private Context mContext;
 
     private Button mAddRetailerButton;
 
     private Location mLastLocation;
 
-    private addRetailerToDB addRetailerTask = null;
-
-    private String shopName;
-    private String addressLine1;
-    private String addressLine2;
-    private String pincode;
-    private String phoneNumber;
+    private SyncFunctions syncFunctions;
 
     GoogleApiClient mGoogleApiClient = null;
     LocationRequest mLocationRequest = null;
     private int yesPressed = 0;
 
-    private Double mLatitude = 0.0;
-    private Double mLongitude = 0.0;
-    private int mLocationPresent = 0;
-
-    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_retailer);
 
+        mContext = getApplicationContext();
+        syncFunctions = new SyncFunctions(mContext);
+
         mShopName = (EditText) findViewById(R.id.retailer_shop_name);
+        mFirstName = (EditText) findViewById(R.id.retailer_first_name);
+        mPhoneNumber = (EditText) findViewById(R.id.retailer_phone_number);
         mAddressLine1 = (EditText) findViewById(R.id.retailer_address_line1);
         mAddressLine2 = (EditText) findViewById(R.id.retailer_address_line2);
+        mLandmark = (EditText) findViewById(R.id.retailer_landmark);
         mPincode = (EditText) findViewById(R.id.retailer_pincode);
-        mPhoneNumber = (EditText) findViewById(R.id.retailer_phone_number);
 
         mAddRetailerButton = (Button) findViewById(R.id.add_retailer_button);
 
@@ -115,16 +132,20 @@ public class AddRetailer extends AppCompatActivity implements
     public void attemptAddRetailer(){
 
         mShopName.setError(null);
-        mAddressLine1.setError(null);
-        mAddressLine2.setError(null);
-        mPincode.setError(null);
+        mFirstName.setError(null);
         mPhoneNumber.setError(null);
 
+        mAddressLine1.setError(null);
+
+        mPincode.setError(null);
+
         shopName = mShopName.getText().toString();
+        firstName = mFirstName.getText().toString();
+        phoneNumber = mPhoneNumber.getText().toString();
         addressLine1 = mAddressLine1.getText().toString();
         addressLine2 = mAddressLine2.getText().toString();
+        landmark = mLandmark.getText().toString();
         pincode = mPincode.getText().toString();
-        phoneNumber = mPhoneNumber.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -147,6 +168,12 @@ public class AddRetailer extends AppCompatActivity implements
             cancel = true;
         }
 
+        if (TextUtils.isEmpty(firstName)) {
+            mFirstName.setError(getString(R.string.error_field_required));
+            focusView = mFirstName;
+            cancel = true;
+        }
+
         if (TextUtils.isEmpty(shopName)) {
             mShopName.setError(getString(R.string.error_field_required));
             focusView = mShopName;
@@ -156,8 +183,7 @@ public class AddRetailer extends AppCompatActivity implements
         if (cancel) {
             focusView.requestFocus();
         } else {
-            LocationConfirmAlert(getString(R.string.location_alert_title), getString(R.string.location_alert_message),
-                    shopName, phoneNumber, addressLine1, addressLine2, pincode);
+            LocationConfirmAlert(getString(R.string.location_alert_title), getString(R.string.location_alert_message));
         }
 
     }
@@ -176,8 +202,7 @@ public class AddRetailer extends AppCompatActivity implements
         return false;
     }
 
-    public void LocationConfirmAlert(String title, String message, final String shopName, final String phoneNumber, final String addressLine1,
-                                     final String addressLine2, final String pincode){
+    public void LocationConfirmAlert(String title, String message){
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
@@ -195,8 +220,8 @@ public class AddRetailer extends AppCompatActivity implements
                 }
 
                 mLocationRequest = new LocationRequest();
-                mLocationRequest.setInterval(10000);
-                mLocationRequest.setFastestInterval(5000);
+                mLocationRequest.setInterval(MiscellaneousValues.LOCATION_INTERVAL);
+                mLocationRequest.setFastestInterval(MiscellaneousValues.LOCATION_FASTEST_INTERVAL);
                 mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
                 LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
@@ -218,8 +243,7 @@ public class AddRetailer extends AppCompatActivity implements
 
                                 yesPressed = 1;
                                 Log.w(LOG_TAG, " Location status setting success ");
-                                addRetailerTask = new addRetailerToDB(shopName, phoneNumber, addressLine1, addressLine2, pincode, getApplicationContext());
-                                addRetailerTask.execute((Void) null);
+                                addRetailerToDB();
 
                                 break;
                             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -228,7 +252,7 @@ public class AddRetailer extends AppCompatActivity implements
 
                                 try {
                                     // Show the dialog by calling startResolutionForResult() and check the result in onActivityResult().
-                                    status.startResolutionForResult(AddRetailer.this, REQUEST_CHECK_SETTINGS);
+                                    status.startResolutionForResult(AddRetailer.this, MiscellaneousValues.REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException e) {
                                     // Ignore the error.
                                 }
@@ -239,12 +263,12 @@ public class AddRetailer extends AppCompatActivity implements
                                 // Location settings are not satisfied. However, we have no way to fix the
                                 // settings so we won'OffersFragment show the dialog.
                                 Log.w(LOG_TAG, " Location status setting settings change unavailable ");
-                                addRetailerTask = new addRetailerToDB(shopName,phoneNumber, addressLine1, addressLine2, pincode, getApplicationContext());
-                                addRetailerTask.execute((Void) null);
+                                addRetailerToDB();
+
                                 break;
                             default:
-                                addRetailerTask = new addRetailerToDB(shopName,phoneNumber, addressLine1, addressLine2, pincode, getApplicationContext());
-                                addRetailerTask.execute((Void) null);
+                                addRetailerToDB();
+
                         }
                     }
                 });
@@ -255,8 +279,8 @@ public class AddRetailer extends AppCompatActivity implements
         alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Call async task to save retailer details to DB
-                addRetailerTask = new addRetailerToDB(shopName,phoneNumber, addressLine1, addressLine2, pincode, getApplicationContext());
-                addRetailerTask.execute((Void) null);
+                addRetailerToDB();
+
             }
         });
 
@@ -268,14 +292,14 @@ public class AddRetailer extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             // Check for the integer request code originally supplied to startResolutionForResult().
-            case REQUEST_CHECK_SETTINGS:
+            case MiscellaneousValues.REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Log.i(LOG_TAG, "User agreed to make required location settings changes.");
                         yesPressed = 1;
                         Log.w(LOG_TAG, " Location status setting success ");
-                        addRetailerTask = new addRetailerToDB(shopName, phoneNumber, addressLine1, addressLine2, pincode, getApplicationContext());
-                        addRetailerTask.execute((Void) null);
+                        addRetailerToDB();
+
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.i(LOG_TAG, "User chose not to make required location settings changes.");
@@ -295,13 +319,10 @@ public class AddRetailer extends AppCompatActivity implements
         }
     }
 
-
     @Override
     public void onConnected(Bundle connectionHint) {
 
     }
-
-
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
@@ -318,117 +339,72 @@ public class AddRetailer extends AppCompatActivity implements
         mGoogleApiClient.connect();
     }
 
-    public class addRetailerToDB extends AsyncTask<Void, Void, Boolean> {
+    public void addRetailerToDB(){
 
-        private final String mShopName;
-        private final String mAddressLine1;
-        private final String mAddressLine2;
-        private final String mPincode;
-        private final String mPhoneNumber;
+        if(yesPressed == 1){
 
-        private int mRetailerId = 999999;
+            mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(MiscellaneousValues.LOCATION_INTERVAL);
+            mLocationRequest.setFastestInterval(MiscellaneousValues.LOCATION_FASTEST_INTERVAL);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        private int mUploadSyncStatus = 0;
-
-        private Context mContext;
-
-        addRetailerToDB(String shopName, String phoneNumber, String addressLine1,
-                        String addressLine2,String pincode, Context context) {
-            mShopName = shopName;
-            mAddressLine1 = addressLine1;
-            mAddressLine2 = addressLine2;
-            mPincode = pincode;
-            mContext = context;
-            mPhoneNumber = phoneNumber;
-        }
-
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            if(yesPressed == 1){
-
-                mLocationRequest = new LocationRequest();
-                mLocationRequest.setInterval(1000);
-                mLocationRequest.setFastestInterval(500);
-                mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-                if (ContextCompat.checkSelfPermission(AddRetailer.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(AddRetailer.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                }
-
-
-
-                //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-                if (mLastLocation != null) {
-                    mLatitude = mLastLocation.getLatitude();
-                    mLongitude = mLastLocation.getLongitude();
-                    Log.w(LOG_TAG, "Latitude is :" + mLatitude.toString());
-                    Log.w(LOG_TAG, "Longitude is :" + mLongitude.toString());
-                    mLocationPresent = 1;
-                }
+            if (ContextCompat.checkSelfPermission(AddRetailer.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(AddRetailer.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             }
 
-            String[] columns = {RetailersEntry.COLUMN_RETAILER_ID};
-            String selection = RetailersEntry.COLUMN_RETAILER_ID +" = (SELECT MAX(" +
-                    RetailersEntry.COLUMN_RETAILER_ID + ") FROM "+ RetailersEntry.TABLE_NAME + ")";
-
-            Cursor cursor = mContext.getContentResolver().query(RetailersEntry.CHECK_URI, columns,selection,null,null);
-
-            if (cursor.getCount() > 0) {
-                cursor.moveToNext();
-                mRetailerId = Integer.valueOf(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_RETAILER_ID))) + 1;
-            }
-            else {
-                mRetailerId = 1;
-            }
-            cursor.close();
-
-            ContentValues retailerValues = new ContentValues();
-            retailerValues.put(RetailersEntry.COLUMN_RETAILER_ID, mRetailerId);
-            retailerValues.put(RetailersEntry.COLUMN_SHOP_NAME, mShopName);
-            retailerValues.put(RetailersEntry.COLUMN_ADDRESS_LINE1, mAddressLine1);
-            retailerValues.put(RetailersEntry.COLUMN_ADDRESS_LINE2, mAddressLine2);
-            retailerValues.put(RetailersEntry.COLUMN_PINCODE, mPincode);
-            retailerValues.put(RetailersEntry.COLUMN_LOCATION_PRESENT, mLocationPresent);
-            retailerValues.put(RetailersEntry.COLUMN_RETAILER_LATITUDE, mLatitude);
-            retailerValues.put(RetailersEntry.COLUMN_RETAILER_LONGITUDE, mLongitude);
-            retailerValues.put(RetailersEntry.COLUMN_UPLOAD_SYNC_STATUS, mUploadSyncStatus);
-            retailerValues.put(RetailersEntry.COLUMN_PHONE_NUMBER, mRetailerId);
-
-            Uri insertedUri = mContext.getContentResolver().insert(RetailersEntry.INSERT_URI, retailerValues);
-
-            Log.w(LOG_TAG, "New retailer added at" + insertedUri.toString());
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            // TODO: Write code to go to Home Activity and download DB
-
-            if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-                mGoogleApiClient.disconnect();
-            }
-
-            Toast.makeText(getApplicationContext(), R.string.successful_retailer_added_toast, Toast.LENGTH_LONG).show();
 
 
+            //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-            Intent intent = new Intent(mContext, MainActivity.class);
-            startActivity(intent);
-            finish();
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-                mGoogleApiClient.disconnect();
+            if (mLastLocation != null) {
+                latitude = mLastLocation.getLatitude();
+                longitude = mLastLocation.getLongitude();
+                Log.w(LOG_TAG, "Latitude is :" + latitude.toString());
+                Log.w(LOG_TAG, "Longitude is :" + longitude.toString());
+                locationPresent = 1;
             }
         }
+
+
+        retailerId = 0;
+        ContentValues retailerValues = new ContentValues();
+
+        retailerValues.put(RetailersEntry.COLUMN_RETAILER_ID, retailerId);
+        retailerValues.put(RetailersEntry.COLUMN_SHOP_NAME, shopName);
+        retailerValues.put(RetailersEntry.COLUMN_FIRST_NAME, firstName);
+
+        retailerValues.put(RetailersEntry.COLUMN_PHONE_NUMBER, phoneNumber);
+
+        retailerValues.put(RetailersEntry.COLUMN_ADDRESS_LINE_1, addressLine1);
+        retailerValues.put(RetailersEntry.COLUMN_ADDRESS_LINE_2, addressLine2);
+        retailerValues.put(RetailersEntry.COLUMN_LANDMARK, landmark);
+        retailerValues.put(RetailersEntry.COLUMN_PINCODE, pincode);
+
+        retailerValues.put(RetailersEntry.COLUMN_LOCATION_PRESENT, locationPresent);
+        retailerValues.put(RetailersEntry.COLUMN_RETAILER_LATITUDE, latitude);
+        retailerValues.put(RetailersEntry.COLUMN_RETAILER_LONGITUDE, longitude);
+
+        retailerValues.put(RetailersEntry.COLUMN_UPLOAD_SYNC_STATUS, uploadSyncStatus);
+        retailerValues.put(RetailersEntry.COLUMN_RETAILER_EDITED, mRetailerEdited);
+
+
+        Uri insertedUri = mContext.getContentResolver().insert(RetailersEntry.INSERT_URI, retailerValues);
+
+        Log.w(LOG_TAG, "New retailer added at" + insertedUri.toString());
+
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+
+        Toast.makeText(getApplicationContext(), R.string.successful_retailer_added_toast, Toast.LENGTH_LONG).show();
+
+        syncFunctions.getUnsyncedRetailerData();
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 
     @Override
@@ -438,6 +414,8 @@ public class AddRetailer extends AppCompatActivity implements
             mGoogleApiClient.disconnect();
         }
     }
+
+
 
 
 }

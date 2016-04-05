@@ -41,7 +41,7 @@ public class MyOrders extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_orders, menu);
+
         return true;
     }
 
@@ -53,10 +53,6 @@ public class MyOrders extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,7 +80,7 @@ public class MyOrders extends AppCompatActivity {
         String selection = OrdersEntry.COLUMN_ORDER_CREATION_TIME + " >= " + dayStartTime + " AND " +
                 OrdersEntry.COLUMN_ORDER_CREATION_TIME + " < " + dayEndTime;
 
-        String[] columns = {RetailersEntry.COLUMN_SHOP_NAME,OrdersEntry.TABLE_NAME +"."+ OrdersEntry.COLUMN_RETAILER_ID,
+        String[] columns = {RetailersEntry.COLUMN_SHOP_NAME, OrdersEntry.TABLE_NAME +"."+ OrdersEntry.COLUMN_RETAILER_ID,
                 OrdersEntry.COLUMN_PRODUCT_COUNT, OrdersEntry.COLUMN_TOTAL_PRICE,
                 OrdersEntry.COLUMN_MODIFIED_PRICE,OrdersEntry.TABLE_NAME + "." + OrdersEntry._ID};
 

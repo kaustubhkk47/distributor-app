@@ -15,6 +15,7 @@
             android:id="@+id/product_display_product_name"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/primary_text"
             />
 
     </LinearLayout>
@@ -29,9 +30,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:text="Price per Unit :  "
-            android:layout_marginLeft="45dp"
+            android:text="Price per unit : "
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="45dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -40,6 +42,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:id="@+id/product_display_price_per_unit"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -48,27 +51,12 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="  Rs."
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:id="@+id/product_display_offer_details"
-            android:layout_marginLeft="45dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="visible"
-            />
-
-    </LinearLayout>
 
 
 </LinearLayout>

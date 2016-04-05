@@ -29,6 +29,14 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
+            <EditText android:id="@+id/retailer_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_retailer_first_name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
             <EditText android:id="@+id/retailer_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,6 +44,26 @@
                 android:inputType="number"
                 android:maxLines="1"
                 android:singleLine="false" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_retailer_address"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_dark"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/secondary_text"
+                android:layout_marginBottom="10dp"
+                />
 
             <EditText android:id="@+id/retailer_address_line1"
                 android:layout_width="match_parent"
@@ -53,6 +81,15 @@
                 android:maxLines="2"
                 android:singleLine="false" />
 
+            <EditText android:id="@+id/retailer_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_retailer_landmark"
+                android:inputType="text"
+                android:maxLines="2"
+                android:singleLine="false" />
+
+
             <EditText android:id="@+id/retailer_pincode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,10 +98,10 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
-            <Button android:id="@+id/add_retailer_button" style="@style/Widget.AppCompat.Button"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+            <Button android:id="@+id/add_retailer_button" style="@style/custom_button"
+                android:layout_width="match_parent"
                 android:layout_marginTop="16dp" android:text="@string/action_add_retailer"
-                android:textStyle="bold" />
+                />
 
         </LinearLayout>
 

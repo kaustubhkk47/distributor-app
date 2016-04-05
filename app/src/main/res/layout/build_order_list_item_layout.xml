@@ -31,9 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:text="Price per unit :  "
+            android:text="Price per unit : "
             android:layout_marginLeft="45dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -42,6 +43,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:id="@+id/build_order_price_per_unit"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -50,35 +52,19 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="  Rs."
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
 
-
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:id="@+id/build_order_offer_details"
-            android:layout_marginLeft="45dp"
-            android:layout_marginBottom="5dp"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-
+        android:paddingBottom="5dp"
         >
 
         <TextView
@@ -87,13 +73,15 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="Quantity : "
             android:layout_marginLeft="45dp"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/secondary_text"
+            />
 
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            style="?android:buttonStyleInset"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            style="@style/custom_button"
             android:id="@+id/build_order_quantity"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"

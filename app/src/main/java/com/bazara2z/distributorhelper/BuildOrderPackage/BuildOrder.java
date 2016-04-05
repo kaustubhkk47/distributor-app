@@ -76,6 +76,9 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
             orderId = extras.getInt(OrdersEntry._ID);
             newOrder = extras.getInt("NewOrder");
         }
+
+        setActivityTitle();
+
         if (newOrder == 1) {
             buildOrderModelList = getAllProducts();
         }
@@ -207,7 +210,8 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
         }
     }
 
-    public List<BuildOrderModel> getAllProducts(){
+    public List<BuildOrderModel> getAllProducts()
+    {
         ArrayList<BuildOrderModel> mBuildOrderModelList = new ArrayList<BuildOrderModel>();
 
         Context mContext = getApplicationContext();
@@ -216,8 +220,8 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
 
         if (newOrder == 1){
 
-            String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT, OffersEntry.COLUMN_OFFER_DETAILS,
-                    ProductsEntry.TABLE_NAME + "." + ProductsEntry.COLUMN_PRODUCT_ID};
+            String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT,
+                    ProductsEntry.COLUMN_PRODUCT_ID};
             cursor = mContext.getContentResolver().query(ProductsEntry.DISPLAY_URI, columns, null, null, null);
         }
         else {
@@ -238,7 +242,7 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
 
                 buildOrderModel.setId(i);
                 buildOrderModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
-                buildOrderModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(OffersEntry.COLUMN_OFFER_DETAILS)));
+
                 buildOrderModel.setPricePerUnit(pricePerUnit);
                 if (newOrder == 1) {
                     buildOrderModel.setQuantity(0);
@@ -339,5 +343,20 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
 
         alertDialog.show();
 
+    }
+
+    public void setActivityTitle(){
+        String[] columns = {RetailersEntry.COLUMN_SHOP_NAME};
+        String selection = RetailersEntry.COLUMN_RETAILER_ID +" = " + retailerId;
+
+        String retailerName;
+
+        Cursor cursor = getApplicationContext().getContentResolver().query(RetailersEntry.CHECK_URI, columns, selection, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            retailerName = cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_SHOP_NAME));
+            setTitle(retailerName);
+        }
     }
 }

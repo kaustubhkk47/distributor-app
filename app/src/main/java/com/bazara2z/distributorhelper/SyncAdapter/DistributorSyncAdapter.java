@@ -3,13 +3,29 @@ package com.bazara2z.distributorhelper.SyncAdapter;
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncResult;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.bazara2z.distributorhelper.Data.DistributorContract;
+import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
+import com.bazara2z.distributorhelper.R;
+
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,17 +33,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Vector;
 
 /**
  * Created by Maddy on 02-03-2016.
  */
 public class DistributorSyncAdapter extends AbstractThreadedSyncAdapter {
-
-    public final String LOG_TAG = "Sync Adapter";
-
-    public static final int SYNC_INTERVAL = 60 * 30;
-    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
-    private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
     public DistributorSyncAdapter(Context context, boolean autoInitialize){
         super(context, autoInitialize);
@@ -123,4 +134,6 @@ public class DistributorSyncAdapter extends AbstractThreadedSyncAdapter {
         return;
         */
     }
+
+
 }

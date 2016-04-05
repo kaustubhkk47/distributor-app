@@ -30,29 +30,19 @@ import com.bazara2z.distributorhelper.MyOrdersPackage.MyOrders;
 import com.bazara2z.distributorhelper.ProductsAndOffersPackage.ProductsAndOffers;
 import com.bazara2z.distributorhelper.R;
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
- * design guidelines</a> for a complete explanation of the behaviors implemented here.
- */
+
 public class NavigationDrawerFragment extends Fragment {
 
-    /**
-     * Remember the position of the selected item.
-     */
+
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 
 
     private static final String LOG_TAG = "NavDrawerFragment";
 
-    /**
-     * A pointer to the current callbacks instance (the Activity).
-     */
+
     private NavigationDrawerCallbacks mCallbacks;
 
-    /**
-     * Helper component that ties the action bar to the navigation drawer.
-     */
+
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
@@ -91,7 +81,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
+                R.layout.fragment_navigation_drawer_list_item,
                 android.R.id.text1,
                 new String[]{
                         getString(R.string.title_section1),
@@ -107,12 +97,7 @@ public class NavigationDrawerFragment extends Fragment {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
 
-    /**
-     * Users of this fragment must call this method to set up the navigation drawer interactions.
-     *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
-     * @param drawerLayout The DrawerLayout containing this fragment's UI.
-     */
+
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;

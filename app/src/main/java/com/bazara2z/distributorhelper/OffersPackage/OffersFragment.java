@@ -87,9 +87,9 @@ public class OffersFragment extends ListFragment {
 
         Context mContext = getActivity().getApplicationContext();
 
-        String[] columns = {OffersEntry.COLUMN_OFFER_DETAILS, ProductsEntry.COLUMN_PRODUCT_NAME};
+        String[] columns = {OffersEntry.COLUMN_OFFER_DETAILS};
 
-        Cursor cursor = mContext.getContentResolver().query(OffersEntry.VIEW_WITH_PRODUCTS_URI, columns, null, null, null);
+        Cursor cursor = mContext.getContentResolver().query(OffersEntry.CHECK_URI, columns, null, null, null);
 
         OffersModel offersModel;
 
@@ -101,7 +101,6 @@ public class OffersFragment extends ListFragment {
 
                 offersModel = new OffersModel();
                 offersModel.setId(i);
-                offersModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
                 offersModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(OffersEntry.COLUMN_OFFER_DETAILS)));
 
                 //Log.w(LOG_TAG, "i currently is " + i);

@@ -12,6 +12,7 @@
     <string name="error_invalid_pincode">This pincode is invalid</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_incorrect_credentials">The username or password is incorrect</string>
+    <string name="error_network">Problem connecting to network</string>
     <string name="error_field_required">This field is required</string>
 
     <string name="successful_login_toast">Logged-in successfully</string>

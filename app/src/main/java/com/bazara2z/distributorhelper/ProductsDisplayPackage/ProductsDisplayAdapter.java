@@ -54,7 +54,6 @@ public class ProductsDisplayAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.product_display_list_item_layout, null);
             holder = new ViewHolder();
-            holder.offerDetails = (TextView) convertView.findViewById(R.id.product_display_offer_details);
             holder.productName = (TextView) convertView.findViewById(R.id.product_display_product_name);
             holder.pricePerUnit = (TextView) convertView.findViewById(R.id.product_display_price_per_unit);
             convertView.setTag(holder);
@@ -66,28 +65,18 @@ public class ProductsDisplayAdapter extends BaseAdapter{
 
         ProductsDisplayModel productsDisplayModel = this.listData.get(position);
         Double pricePerUnit = productsDisplayModel.getPricePerUnit();
-        String offerDetails = productsDisplayModel.getOfferDetails();
 
-        holder.offerDetails.setText(offerDetails);
+
         holder.productName.setText(productsDisplayModel.getProductName());
         holder.pricePerUnit.setText(String.valueOf(pricePerUnit));
+
         //Log.w(LOG_TAG, "Price per unit is " + pricePerUnit + " and is null " + (pricePerUnit != null) );
-
-        if (offerDetails == null){
-            //Log.w(LOG_TAG, "Price per unit is " + pricePerUnit + " and is null " + (pricePerUnit != null) );
-            holder.offerDetails.setVisibility(View.GONE);
-        }
-        else {
-            holder.offerDetails.setVisibility(View.VISIBLE);
-        }
-
 
         return convertView;
     }
 
     static class ViewHolder{
         int id;
-        TextView offerDetails;
         TextView productName;
         TextView pricePerUnit;
     }

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Bundle;
 
@@ -18,11 +17,24 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
 import com.bazara2z.distributorhelper.R;
 
-import java.util.Vector;
+import com.bazara2z.distributorhelper.SyncAdapter.SyncFunctions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -37,7 +49,11 @@ public class LoginActivity extends AppCompatActivity {
     private static final String DUMMY_CREDENTIALS_2 = "9999999999";
     private static final String DUMMY_PASSWORD_2 = "111111";
 
-    private UserLoginTask mAuthTask = null;
+    private String mPhoneNumber;
+    private String mPassword;
+    private int internalLogin = 0;
+    private Context mContext;
+    private SyncFunctions syncFunctions;
 
     // UI references.
     private EditText mPhoneNoView;
@@ -45,15 +61,20 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
 
-    //private DistributorProvider distributorProvider;
+    private String mToken = "";
+
+    private final String mUserName = "Test User";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        insertSampleData();
 
         setContentView(R.layout.activity_login);
+
+        mContext = getApplicationContext();
+        syncFunctions = new SyncFunctions(mContext);
 
         // Set up the login form.
         mPhoneNoView = (EditText) findViewById(R.id.phonenumber);
@@ -74,10 +95,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void attemptLogin() {
-
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mPhoneNoView.setError(null);
@@ -114,9 +131,150 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
             focusView = mLoginFormView;
             focusView.requestFocus();
-            mAuthTask = new UserLoginTask(phoneno, password, getApplicationContext());
-            mAuthTask.execute((Void) null);
+
+            mPhoneNumber = phoneno;
+            mPassword = password;
+
+            checkInternalLogin();
+
+            //mAuthTask = new UserLoginTask(phoneno, password, getApplicationContext());
+            //mAuthTask.execute((Void) null);
         }
+    }
+
+    public  void checkInternalLogin(){
+
+        String[] columns = {UserEntry.COLUMN_PHONE_NUMBER, UserEntry.COLUMN_PASSWORD};
+
+        Cursor cursor = mContext.getContentResolver().query(UserEntry.CHECK_URI, columns, null, null, null);
+
+        if (cursor.getCount() > 0) {
+
+            cursor.moveToNext();
+            //Log.w(LOG_TAG, "getString(1)" + cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PHONE_NUMBER)));
+            //Log.w(LOG_TAG, "getString(2)"+ cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PASSWORD)) );
+            Log.w(LOG_TAG, "Got cursor inside AsyncTask");
+            if (cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PHONE_NUMBER)).equals(mPhoneNumber)
+                    && cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PASSWORD)).equals(mPassword)) {
+
+                internalLogin = 1;
+                Toast.makeText(getApplicationContext(), R.string.successful_login_toast, Toast.LENGTH_LONG).show();
+                ContentValues userValues = new ContentValues();
+
+                userValues.put(UserEntry.COLUMN_LOGIN_STATUS, 1);
+
+                String selection = null;
+                String[] selectionArgs = null;
+
+                int editedrows = mContext.getContentResolver().update(UserEntry.LOGIN_STATUS_URI, userValues,selection,selectionArgs);
+
+
+                syncFunctions.getUnsyncedRetailerData();
+
+                Intent intent = new Intent(mContext, MainActivity.class);
+                startActivity(intent);
+
+                finish();
+                Log.w(LOG_TAG, "Logged in via database this time");
+
+                showProgress(false);
+
+                cursor.close();
+                return;
+            }
+            else {
+                connectToNetwork();
+                cursor.close();
+                return;
+            }
+        }
+        connectToNetwork();
+        cursor.close();
+
+    }
+
+    public void connectToNetwork() {
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        Log.w(LOG_TAG, this.toString());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, syncFunctions.LOGIN_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String statusCode = jsonResponse.getString("statusCode");
+
+                            if (statusCode.equals(syncFunctions.CORRECT_RESPONSE_CODE)) {
+
+                                String body = jsonResponse.getString("body");
+
+                                JSONObject bodyJSON = new JSONObject(body);
+
+                                mToken = bodyJSON.getString("token");
+                                Log.w(LOG_TAG, mToken);
+
+                                // TODO: set username via API
+
+                                loginSuccess();
+                                return;
+                            } else {
+                                setIncorrectCredentialsError();
+                                return;
+                            }
+
+                        } catch (JSONException e) {
+
+                            setNetworkError();
+                            return;
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.w(LOG_TAG, error.toString());
+                        setNetworkError();
+                        return;
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                params.put(syncFunctions.KEY_MOBILE_NUMBER, mPhoneNumber);
+                params.put(syncFunctions.KEY_PASSWORD, mPassword);
+                return params;
+            }
+            /*
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // the POST parameters:
+                headers.put("Content-Type",  "application/x-www-form-urlencoded");
+                return headers;
+            }
+            */
+        };
+
+        queue.add(postRequest);
+
+    }
+
+    public void setIncorrectCredentialsError(){
+        showProgress(false);
+        mPasswordView.setError(getString(R.string.error_incorrect_credentials));
+        mPasswordView.requestFocus();
+    }
+
+    public void setNetworkError(){
+        showProgress(false);
+        mPasswordView.setError(getString(R.string.error_network));
+        mPasswordView.requestFocus();
     }
 
     private boolean isPhoneNoValid(String phoneno) {
@@ -131,7 +289,6 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void showProgress(final boolean show) {
 
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -139,296 +296,51 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public void loginSuccess(){
 
-        private final String mPhoneNumber;
-        private final String mPassword;
-        private Context mContext;
-        private int internalLogin = 0;
-        private final String mUserName = "Test User";
-        private int mUserId = 1;
+        //Delete old user from DB
+        String selection = null;
+        String[] selectionArgs = null;
 
-        UserLoginTask(String phoneNumber, String password, Context context) {
-            mPhoneNumber = phoneNumber;
-            mPassword = password;
-            mContext = context;
-        }
+        int deletedrows = mContext.getContentResolver().delete(UserEntry.DELETE_URI, selection ,selectionArgs);
+        Log.w(LOG_TAG, "Deleted"+ deletedrows + " user from database");
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
+        //Insert new user into user table
+        ContentValues userValues = new ContentValues();
+        userValues.put(UserEntry.COLUMN_PHONE_NUMBER, mPhoneNumber);
+        userValues.put(UserEntry.COLUMN_PASSWORD, mPassword);
+        userValues.put(UserEntry.COLUMN_LOGIN_STATUS, 1);
+        userValues.put(UserEntry.COLUMN_USER_NAME, mUserName);
+        userValues.put(UserEntry.COLUMN_TOKEN, mToken);
 
-            // TODO: Write entire code for login check
-            /** First check if the credentials match those stored inside internal database
-             * If they do, move forward to main activity and check if DB is synced
-             * If they don'OffersFragment, check network access and authenticate on network
-             * Sync database accordingly
-             */
+        Uri insertedUri = mContext.getContentResolver().insert(UserEntry.INSERT_URI, userValues);
 
+        Log.w(LOG_TAG, "Inserted new buyer into database");
+        Log.w(LOG_TAG, insertedUri.toString());
 
-            String[] columns = {UserEntry.COLUMN_PHONE_NUMBER,UserEntry.COLUMN_PASSWORD};
+        syncFunctions.getUnsyncedRetailerData();
 
-            Cursor cursor = mContext.getContentResolver().query(UserEntry.CHECK_URI, columns,null,null,null);
+        Toast.makeText(getApplicationContext(), R.string.successful_login_toast, Toast.LENGTH_LONG).show();
 
-            if (cursor.getCount() > 0) {
+        //------------------------------------------------------------------------------------------
 
-                cursor.moveToNext();
-                //Log.w(LOG_TAG, "getString(1)" + cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PHONE_NUMBER)));
-                //Log.w(LOG_TAG, "getString(2)"+ cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PASSWORD)) );
-                Log.w(LOG_TAG,"Got cursor inside AsyncTask");
-                if(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PHONE_NUMBER)).equals(mPhoneNumber)
-                        && cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PASSWORD)).equals(mPassword)){
+        mPhoneNoView.getText().clear();
+        mPasswordView.getText().clear();
 
-                    internalLogin = 1;
-                    //Toast.makeText(getApplicationContext(), R.string.successful_login_toast, Toast.LENGTH_SHORT).show();
+        //------------------------------------------------------------------------------------------
 
-                    cursor.close();
-                    return true;
-                }
-            }
-            cursor.close();
+        Intent intent = new Intent(mContext, MainActivity.class);
+        startActivity(intent);
+        finish();
+        showProgress(false);
 
-
-            try {
-                //Use Volley to connect to the network
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-
-            if(DUMMY_CREDENTIALS_1.equals(mPhoneNumber) && DUMMY_PASSWORD_1.equals(mPassword)){
-                return true;
-            }
-            if(DUMMY_CREDENTIALS_2.equals(mPhoneNumber) && DUMMY_PASSWORD_2.equals(mPassword)){
-                return true;
-            }
-
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            // TODO: Write code to go to Home Activity and download DB
-
-            mAuthTask = null;
-
-
-            if (success) {
-
-                if(internalLogin == 0) {
-
-                    //Delete old user from DB
-
-                    String selection = null;
-                    String[] selectionArgs = null;
-
-                    int deletedrows = mContext.getContentResolver().delete(UserEntry.DELETE_URI, selection ,selectionArgs);
-                    Log.w(LOG_TAG, "Deleted"+ deletedrows + " user from database");
-
-                    //Insert new user into user table
-                    ContentValues userValues = new ContentValues();
-                    userValues.put(UserEntry.COLUMN_USER_ID, mUserId);
-                    userValues.put(UserEntry.COLUMN_PHONE_NUMBER, mPhoneNumber);
-                    userValues.put(UserEntry.COLUMN_PASSWORD, mPassword);
-                    userValues.put(UserEntry.COLUMN_LOGIN_STATUS, 1);
-                    userValues.put(UserEntry.COLUMN_USER_NAME, mUserName);
-
-                    Uri insertedUri = mContext.getContentResolver().insert(UserEntry.INSERT_URI, userValues);
-
-                    Log.w(LOG_TAG, "Inserted new buyer into database");
-                    Log.w(LOG_TAG, insertedUri.toString());
-
-                    Toast.makeText(getApplicationContext(), R.string.successful_login_toast, Toast.LENGTH_LONG).show();
-
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
-                    // TODO: Call SyncAdapter to fetch data from server
-                }
-                else if(internalLogin == 1){
-                    Toast.makeText(getApplicationContext(), "Hey you logged in via DB this time", Toast.LENGTH_LONG).show();
-                    ContentValues userValues = new ContentValues();
-
-                    userValues.put(UserEntry.COLUMN_LOGIN_STATUS, 1);
-
-                    String selection = null;
-                    String[] selectionArgs = null;
-
-                    int editedrows = mContext.getContentResolver().update(UserEntry.LOGIN_STATUS_URI, userValues,selection,selectionArgs);
-
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-
-                    finish();
-                    Log.w(LOG_TAG, "Logged in via database this time");
-                }
-
-                showProgress(false);
-
-            } else {
-                showProgress(false);
-                mPasswordView.setError(getString(R.string.error_incorrect_credentials));
-                mPasswordView.requestFocus();
-            }
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
 
-    public void insertSampleData(){
 
-        Context mContext = getApplicationContext();
 
-        //---------------------------------------------------------
-        // INSERT RETAILERS
 
-        int retailersCount = 1;
-
-        String[] retailerColumns = {RetailersEntry.COLUMN_RETAILER_ID};
-
-        Cursor retailerCursor = mContext.getContentResolver().query(RetailersEntry.CHECK_URI, retailerColumns,null,null,null);
-
-        if (retailerCursor.getCount() > 0) {
-            retailersCount = 0;
-        }
-
-        retailerCursor.close();
-
-        if (retailersCount == 1) {
-
-            Vector<ContentValues> cVVector = new Vector<ContentValues>(5);
-
-            for (int i = 1; i <= 5; i = i + 1) {
-
-                int mRetailerId = i;
-                String mShopName = "Retailer Shop " + String.valueOf(i);
-                String mAddressLine1 = "Address Line 1";
-                String mAddressLine2 = "Address Line 2";
-                String mPhoneNumber = "9999999999";
-                String mPincode = "111111";
-                int mLocationPresent = 0;
-                double mLatitude = 0.0;
-                double mLongitude = 0.0;
-                int mUploadSyncStatus = 0;
-
-                ContentValues retailerValues = new ContentValues();
-                retailerValues.put(RetailersEntry.COLUMN_RETAILER_ID, mRetailerId);
-                retailerValues.put(RetailersEntry.COLUMN_SHOP_NAME, mShopName);
-                retailerValues.put(RetailersEntry.COLUMN_ADDRESS_LINE1, mAddressLine1);
-                retailerValues.put(RetailersEntry.COLUMN_ADDRESS_LINE2, mAddressLine2);
-                retailerValues.put(RetailersEntry.COLUMN_PINCODE, mPincode);
-                retailerValues.put(RetailersEntry.COLUMN_LOCATION_PRESENT, mLocationPresent);
-                retailerValues.put(RetailersEntry.COLUMN_RETAILER_LATITUDE, mLatitude);
-                retailerValues.put(RetailersEntry.COLUMN_RETAILER_LONGITUDE, mLongitude);
-                retailerValues.put(RetailersEntry.COLUMN_UPLOAD_SYNC_STATUS, mUploadSyncStatus);
-                retailerValues.put(RetailersEntry.COLUMN_PHONE_NUMBER, mPhoneNumber);
-
-                //Uri insertedUri = mContext.getContentResolver().insert(RetailersEntry.INSERT_URI, retailerValues);
-
-                cVVector.add(retailerValues);
-            }
-
-            ContentValues[] cvArray = new ContentValues[cVVector.size()];
-            cVVector.toArray(cvArray);
-
-            mContext.getContentResolver().bulkInsert(RetailersEntry.BULK_INSERT_URI, cvArray);
-
-            Log.w(LOG_TAG,"Inserted retailers");
-        }
-        //---------------------------------------------------------
-        // INSERT PRODUCTS
-
-        int productsCount = 1;
-
-        String[] productColumns = {ProductsEntry.COLUMN_PRODUCT_ID};
-
-        Cursor productsCursor = mContext.getContentResolver().query(ProductsEntry.CHECK_URI, productColumns,null,null,null);
-
-        if (productsCursor.getCount() > 0) {
-            productsCount = 0;
-        }
-
-        productsCursor.close();
-
-        if (productsCount == 1) {
-
-            Vector<ContentValues> cVVector = new Vector<ContentValues>(20);
-
-            for (int i = 1; i <= 20; i = i + 1) {
-
-                int mProductId = i;
-                String mProductName = "Product " + String.valueOf(i);
-                double mPricePerUnit = 10.0;
-
-                ContentValues productValues = new ContentValues();
-
-                productValues.put(ProductsEntry.COLUMN_PRODUCT_ID, mProductId);
-                productValues.put(ProductsEntry.COLUMN_PRODUCT_NAME, mProductName);
-                productValues.put(ProductsEntry.COLUMN_PRICE_PER_UNIT, mPricePerUnit);
-
-                //Uri insertedUri = mContext.getContentResolver().insert(ProductsEntry.INSERT_URI, productValues);
-
-                cVVector.add(productValues);
-            }
-
-            ContentValues[] cvArray = new ContentValues[cVVector.size()];
-            cVVector.toArray(cvArray);
-
-            mContext.getContentResolver().bulkInsert(ProductsEntry.BULK_INSERT_URI, cvArray);
-
-            Log.w(LOG_TAG,"Inserted products");
-        }
-
-        //---------------------------------------------------------
-        // INSERT OFFERS
-
-        int offersCount = 1;
-
-        String[] offerColumns = {OffersEntry.COLUMN_OFFER_ID};
-
-        Cursor offerCursor = mContext.getContentResolver().query(OffersEntry.CHECK_URI, offerColumns,null,null,null);
-
-        if (offerCursor.getCount() > 0) {
-            offersCount = 0;
-        }
-
-        offerCursor.close();
-
-        if (offersCount == 1) {
-
-            Vector<ContentValues> cVVector = new Vector<ContentValues>(10);
-
-            for (int i = 1; i <= 10; i = i + 1) {
-
-                int mProductId = i;
-                String mOfferDetails = "Discount of 10%";
-                int mOfferId = i;
-
-                ContentValues offerValues = new ContentValues();
-
-                offerValues.put(OffersEntry.COLUMN_OFFER_ID, mOfferId);
-                offerValues.put(OffersEntry.COLUMN_OFFER_DETAILS, mOfferDetails);
-                offerValues.put(OffersEntry.COLUMN_PRODUCT_ID, mProductId);
-
-                //Uri insertedUri = mContext.getContentResolver().insert(OffersEntry.INSERT_URI, offerValues);
-
-                cVVector.add(offerValues);
-            }
-
-            ContentValues[] cvArray = new ContentValues[cVVector.size()];
-            cVVector.toArray(cvArray);
-
-            mContext.getContentResolver().bulkInsert(OffersEntry.BULK_INSERT_URI, cvArray);
-
-            Log.w(LOG_TAG,"Inserted offers");
-        }
-    }
 
 }
+
+
 

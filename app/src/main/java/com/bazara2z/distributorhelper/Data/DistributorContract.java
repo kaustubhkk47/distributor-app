@@ -47,11 +47,11 @@ public class DistributorContract {
         // Table name
         public static final String TABLE_NAME = "user";
 
-        public static final String COLUMN_USER_ID = "user_id";
         public static final String COLUMN_PHONE_NUMBER = "phone_number";
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_USER_NAME = "user_name";
         public static final String COLUMN_LOGIN_STATUS = "login_status";
+        public static final String COLUMN_TOKEN = "token";
 
         public static Uri buildUserUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -66,13 +66,15 @@ public class DistributorContract {
 
         public static final String INSERT = "insert";
         public static final String CHECK = "check";
-        public static final String UPDATE_LOCATION = "update_location";
+        public static final String UPDATE = "update_location";
         public static final String BULK_INSERT = "bulk_insert";
+        public static final String DELETE = "delete";
 
         public static final Uri INSERT_URI = CONTENT_URI.buildUpon().appendPath(INSERT).build();
         public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
-        public static final Uri UPDATE_LOCATION_URI = CONTENT_URI.buildUpon().appendPath(UPDATE_LOCATION).build();
+        public static final Uri UPDATE_URI = CONTENT_URI.buildUpon().appendPath(UPDATE).build();
         public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
+        public static final Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(DELETE).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_RETAILERS;
@@ -83,13 +85,20 @@ public class DistributorContract {
 
         public static final String COLUMN_RETAILER_ID = "retailer_id";
         public static final String COLUMN_SHOP_NAME = "shop_name";
-        public static final String COLUMN_ADDRESS_LINE1 = "address_line1";
-        public static final String COLUMN_ADDRESS_LINE2 = "address_line2";
-        public static final String COLUMN_PINCODE = "pincode";
+        public static final String COLUMN_FIRST_NAME = "first_name";
+
         public static final String COLUMN_PHONE_NUMBER = "phone_number";
+
+        public static final String COLUMN_ADDRESS_LINE_1 = "address_line_1";
+        public static final String COLUMN_ADDRESS_LINE_2 = "address_line_2";
+        public static final String COLUMN_LANDMARK = "landmark";
+        public static final String COLUMN_PINCODE = "pincode";
+
         public static final String COLUMN_LOCATION_PRESENT = "location_present";
         public static final String COLUMN_RETAILER_LATITUDE = "retailer_latitude";
         public static final String COLUMN_RETAILER_LONGITUDE = "retailer_longitude";
+        public static final String COLUMN_RETAILER_EDITED = "retailer_edited";
+
         public static final String COLUMN_UPLOAD_SYNC_STATUS = "upload_sync_status";
 
         public static Uri buildRetailerrUri(long id) {
@@ -108,12 +117,14 @@ public class DistributorContract {
         public static final String DISPLAY = "display";
         public static final String BULK_INSERT = "bulk_insert";
         public static final String PRODUCTS_WITH_QUANTITY = "products_with_uantity";
+        public static final String DELETE = "delete";
 
         public static final Uri INSERT_URI = CONTENT_URI.buildUpon().appendPath(INSERT).build();
         public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
         public static final Uri DISPLAY_URI = CONTENT_URI.buildUpon().appendPath(DISPLAY).build();
         public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
         public static final Uri PRODUCTS_WITH_QUANTITY_URI = CONTENT_URI.buildUpon().appendPath(PRODUCTS_WITH_QUANTITY).build();
+        public static final Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(DELETE).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
@@ -125,7 +136,6 @@ public class DistributorContract {
         public static final String COLUMN_PRODUCT_ID = "product_id";
         public static final String COLUMN_PRODUCT_NAME = "product_name";
         public static final String COLUMN_PRICE_PER_UNIT = "price_per_unit";
-
 
         public static Uri buildProductUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -142,11 +152,13 @@ public class DistributorContract {
         public static final String CHECK = "check";
         public static final String VIEW_WITH_PRODUCTS = "view_with_products";
         public static final String BULK_INSERT = "bulk_insert";
+        public static final String DELETE = "delete";
 
         public static final Uri INSERT_URI = CONTENT_URI.buildUpon().appendPath(INSERT).build();
         public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
         public static final Uri VIEW_WITH_PRODUCTS_URI = CONTENT_URI.buildUpon().appendPath(VIEW_WITH_PRODUCTS).build();
         public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
+        public static final Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(DELETE).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_OFFERS;
@@ -157,7 +169,6 @@ public class DistributorContract {
 
         public static final String COLUMN_OFFER_ID = "offer_id";
         public static final String COLUMN_OFFER_DETAILS = "offer_details";
-        public static final String COLUMN_PRODUCT_ID = "product_id";
 
         public static Uri buildOfferUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -192,6 +203,7 @@ public class DistributorContract {
         public static final String COLUMN_RETAILER_ID = "retailer_id";
         public static final String COLUMN_ORDER_CREATION_TIME = "order_creation_time";
         public static final String COLUMN_ORDER_UPDATION_TIME = "order_updation_time";
+        public static final String COLUMN_ORDER_ID = "order_id";
 
         public static Uri buildOrderUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -207,11 +219,12 @@ public class DistributorContract {
         public static final String INSERT = "insert";
         public static final String BULK_INSERT = "bulk_insert";
         public static final String DELETE = "delete";
-
+        public static final String CHECK = "check";
 
         public static final Uri INSERT_URI = CONTENT_URI.buildUpon().appendPath(INSERT).build();
         public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
         public static final Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(DELETE).build();
+        public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_ORDER_ITEMS;
@@ -233,8 +246,15 @@ public class DistributorContract {
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRACKING).build();
 
         public static final String INSERT = "insert";
+        public static final String CHECK = "check";
+        public static final String CHECK_WITH_RETAILERS = "check_with_retailers";
+        public static final String UPDATE = "update";
 
         public static final Uri INSERT_URI = CONTENT_URI.buildUpon().appendPath(INSERT).build();
+        public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
+        public static final Uri UPDATE_URI = CONTENT_URI.buildUpon().appendPath(UPDATE).build();
+        public static final Uri CHECK_WITH_RETAILERS_URI = CONTENT_URI.buildUpon().appendPath(CHECK_WITH_RETAILERS).build();
+
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TRACKING;
@@ -247,6 +267,7 @@ public class DistributorContract {
         public static final String COLUMN_TRACKED_LATITUDE = "tracked_latitude";
         public static final String COLUMN_TRACKED_LONGITUDE = "tracked_longitude";
         public static final String COLUMN_RETAILER_ID = "retailer_id";
+        public static final String COLUMN_UPLOAD_SYNC_STATUS = "upload_sync_status";
 
         public static Uri buildTrackingUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -265,11 +286,30 @@ public class DistributorContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_SYNC_STATES;
 
+        public static final String BULK_INSERT = "insert";
+        public static final String CHECK = "check";
+
+        public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
+        public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
+
         public static final String TABLE_NAME = "sync_states";
 
+        public static final String COLUMN_SYNC_ENTRY = "sync_entry";
         public static final String COLUMN_SYNC_STATUS = "sync_status";
         public static final String COLUMN_LAST_SYNCED_TIME = "last_synced_time";
 
+        public static final int RETAILER_UPLOAD = 1;
+        public static final int RETAILER_DOWNLOAD = 2;
+        public static final int ORDERS_UPLOAD = 3;
+        public static final int PRODUCTS_DOWNLOAD = 4;
+        public static final int OFFERS_DOWNLOAD = 5;
+        public static final int TRACKING_UPLOAD = 6;
+
+        public static final int SYNC_STATES_COUNT = 6;
 
     }
+
+
+
+
 }

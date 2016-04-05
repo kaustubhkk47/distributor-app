@@ -57,6 +57,7 @@ public class SelectRetailerAdapter extends BaseAdapter {
             holder.phoneNumber = (TextView) convertView.findViewById(R.id.select_retailer_phone_number);
             holder.addressLine1 = (TextView) convertView.findViewById(R.id.select_retailer_address_line1);
             holder.addressLine2 = (TextView) convertView.findViewById(R.id.select_retailer_address_line2);
+            holder.landmark = (TextView) convertView.findViewById(R.id.select_retailer_landmark);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -66,18 +67,29 @@ public class SelectRetailerAdapter extends BaseAdapter {
         holder.retailerName.setText(selectRetailerModel.getRetailerName());
         holder.phoneNumber.setText(selectRetailerModel.getPhoneNumber());
         holder.addressLine1.setText(selectRetailerModel.getAddressLine1());
-        holder.addressLine2.setText(selectRetailerModel.getAddressLine2());
+        if(selectRetailerModel.getAddressLine2().equals("")) {
+            holder.addressLine2.setVisibility(View.GONE);
+        }
+        else {
+            holder.addressLine2.setText(selectRetailerModel.getAddressLine2());
+        }
+        if(selectRetailerModel.getLandmark().equals("")) {
+            holder.landmark.setVisibility(View.GONE);
+        }
+        else {
+            holder.landmark.setText(selectRetailerModel.getLandmark());
+        }
 
         return convertView;
     }
 
     static class ViewHolder{
         int id;
-
         TextView retailerName;
         TextView phoneNumber;
         TextView addressLine1;
         TextView addressLine2;
+        TextView landmark;
     }
 
 }

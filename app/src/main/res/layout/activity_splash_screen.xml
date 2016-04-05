@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal|center_vertical"
-    android:background="@color/SplashBackground">
+    android:background="@color/light_grey">
+
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bazara2z_logo"
-        android:layout_marginLeft="75dp"
-        android:layout_marginRight="75dp"/>
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/splash_screen_logo"
+        android:layout_centerInParent="true"/>
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bazar A2Z\nDistibutors"
+        android:textSize="30sp"
+        android:textColor="@color/primary_text"
+        android:textStyle="normal|italic|bold"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/splash_screen_logo"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

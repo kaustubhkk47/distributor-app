@@ -13,6 +13,7 @@ public class BuildOrderModel {
     public int quantity;
     public int productId;
     public int orderItemId;
+    public String unit;
 
     public BuildOrderModel(){
 
@@ -80,6 +81,14 @@ public class BuildOrderModel {
 
     public void setOrderItemId(int orderItemId){
         this.orderItemId = orderItemId;
+    }
+
+    public String getUnit(){
+        return unit;
+    }
+
+    public void setUnit(String unit){
+        this.unit = unit;
     }
 
 }

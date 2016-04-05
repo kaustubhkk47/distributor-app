@@ -5,7 +5,7 @@
 
     <string name="content_authority">com.bazara2z.distributorhelper</string>
 
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">BazarA2Z Disributor</string>
 
     <string name="title_section1">My Orders</string>
     <string name="title_section2">Products and Offers</string>
@@ -17,20 +17,20 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_add_retailer">AddRetailer</string>
+    <string name="title_activity_add_retailer">Add Retailer</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_products_and_offers">ProductsAndOffers</string>
-    <string name="title_activity_my_orders">MyOrders</string>
+    <string name="title_activity_products_and_offers">Products And Offers</string>
+    <string name="title_activity_my_orders">My Orders</string>
 
     <string name="products_tab">Products</string>
     <string name="offers_tab">Offers</string>
     <string name="summary_tab">Summary</string>
-    <string name="title_activity_select_retailer">SelectRetailer</string>
-    <string name="title_activity_build_order">BuildOrder</string>
+    <string name="title_activity_select_retailer">Select Retailer</string>
+    <string name="title_activity_build_order">Build Order</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_view_orders">ViewOrders</string>
+    <string name="title_activity_view_orders">View Orders</string>
 
 </resources>

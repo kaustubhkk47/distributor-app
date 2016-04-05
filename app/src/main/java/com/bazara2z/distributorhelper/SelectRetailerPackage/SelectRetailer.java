@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +28,7 @@ import java.util.List;
 
 import com.bazara2z.distributorhelper.BuildOrderPackage.BuildOrder;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
+import com.bazara2z.distributorhelper.Miscellaneous.MiscellaneousValues;
 import com.bazara2z.distributorhelper.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -53,13 +53,13 @@ public class SelectRetailer extends AppCompatActivity implements
     GoogleApiClient mGoogleApiClient = null;
     LocationRequest mLocationRequest = null;
 
+    //TODO: CHANGE RETAILER UPLOAD SYNC STATUS TO 0 IF LOCATION IS PICKED UP
+
     private Double mLatitude = 0.0;
     private Double mLongitude = 0.0;
     private int mLocationPresent = 1;
     public int gotLocation = 0;
     private Location mLastLocation;
-
-    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
     int clickedRetailerId;
 
@@ -67,6 +67,7 @@ public class SelectRetailer extends AppCompatActivity implements
     int orderId = 0;
 
     Context mContext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,9 +119,6 @@ public class SelectRetailer extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -131,8 +129,8 @@ public class SelectRetailer extends AppCompatActivity implements
         ArrayList<SelectRetailerModel> mSelectRetailerModelList = new ArrayList<SelectRetailerModel>();
 
 
-        String[] columns = {RetailersEntry.COLUMN_RETAILER_ID, RetailersEntry.COLUMN_SHOP_NAME, RetailersEntry.COLUMN_PHONE_NUMBER,
-        RetailersEntry.COLUMN_ADDRESS_LINE1, RetailersEntry.COLUMN_ADDRESS_LINE2};
+        String[] columns = {RetailersEntry._ID, RetailersEntry.COLUMN_SHOP_NAME, RetailersEntry.COLUMN_PHONE_NUMBER,
+        RetailersEntry.COLUMN_ADDRESS_LINE_1, RetailersEntry.COLUMN_ADDRESS_LINE_2, RetailersEntry.COLUMN_LANDMARK};
 
         Cursor cursor = mContext.getContentResolver().query(RetailersEntry.CHECK_URI, columns, null, null, null);
 
@@ -144,13 +142,12 @@ public class SelectRetailer extends AppCompatActivity implements
 
                 selectRetailerModel = new SelectRetailerModel();
                 selectRetailerModel.setId(i);
-                selectRetailerModel.setRetailerId(cursor.getInt(cursor.getColumnIndex(RetailersEntry.COLUMN_RETAILER_ID)));
+                selectRetailerModel.setRetailerId(cursor.getInt(cursor.getColumnIndex(RetailersEntry._ID)));
                 selectRetailerModel.setRetailerName(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_SHOP_NAME)));
                 selectRetailerModel.setPhoneNumber(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_PHONE_NUMBER)));
-                selectRetailerModel.setAddressLine1(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_ADDRESS_LINE1)));
-                selectRetailerModel.setAddressLine2(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_ADDRESS_LINE2)));
-
-
+                selectRetailerModel.setAddressLine1(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_ADDRESS_LINE_1)));
+                selectRetailerModel.setAddressLine2(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_ADDRESS_LINE_2)));
+                selectRetailerModel.setLandmark(cursor.getString(cursor.getColumnIndex(RetailersEntry.COLUMN_LANDMARK)));
 
                 mSelectRetailerModelList.add(selectRetailerModel);
             }
@@ -172,8 +169,8 @@ public class SelectRetailer extends AppCompatActivity implements
         }
 
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setInterval(MiscellaneousValues.LOCATION_INTERVAL);
+        mLocationRequest.setFastestInterval(MiscellaneousValues.LOCATION_FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
@@ -201,7 +198,7 @@ public class SelectRetailer extends AppCompatActivity implements
 
                         try {
                             // Show the dialog by calling startResolutionForResult() and check the result in onActivityResult().
-                            status.startResolutionForResult(SelectRetailer.this, REQUEST_CHECK_SETTINGS);
+                            status.startResolutionForResult(SelectRetailer.this, MiscellaneousValues.REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException e) {
                             // Ignore the error.
                         }
@@ -224,8 +221,8 @@ public class SelectRetailer extends AppCompatActivity implements
     public void getLocationFinal(){
 
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(500);
+        mLocationRequest.setInterval(MiscellaneousValues.LOCATION_INTERVAL);
+        mLocationRequest.setFastestInterval(MiscellaneousValues.LOCATION_FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ContextCompat.checkSelfPermission(SelectRetailer.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -270,9 +267,11 @@ public class SelectRetailer extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (requestCode) {
             // Check for the integer request code originally supplied to startResolutionForResult().
-            case REQUEST_CHECK_SETTINGS:
+
+            case MiscellaneousValues.REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         getLocationFinal();
@@ -291,13 +290,15 @@ public class SelectRetailer extends AppCompatActivity implements
 
         ContentValues trackingValues = new ContentValues();
 
-        Long trackedTime = (Long) System.currentTimeMillis();
+        Long trackedTime = System.currentTimeMillis();
 
+        Log.w(LOG_TAG, "Tracked time was " + trackedTime);
 
         trackingValues.put(TrackingEntry.COLUMN_RETAILER_ID, clickedRetailerId);
         trackingValues.put(TrackingEntry.COLUMN_TRACKED_LATITUDE, mLatitude);
         trackingValues.put(TrackingEntry.COLUMN_TRACKED_LONGITUDE, mLongitude);
         trackingValues.put(TrackingEntry.COLUMN_TRACKED_TIME, trackedTime);
+        trackingValues.put(TrackingEntry.COLUMN_UPLOAD_SYNC_STATUS, 0);
 
         Uri insertedUri = mContext.getContentResolver().insert(TrackingEntry.INSERT_URI, trackingValues);
 
@@ -306,7 +307,7 @@ public class SelectRetailer extends AppCompatActivity implements
 
     public void checkRetailerLocation(){
         String[] columns = {RetailersEntry.COLUMN_LOCATION_PRESENT};
-        String selection = RetailersEntry.COLUMN_RETAILER_ID +" = " + clickedRetailerId;
+        String selection = RetailersEntry._ID +" = " + clickedRetailerId;
 
         Cursor cursor = mContext.getContentResolver().query(RetailersEntry.CHECK_URI, columns,selection,null,null);
 
@@ -327,14 +328,13 @@ public class SelectRetailer extends AppCompatActivity implements
 
         String selection = RetailersEntry.COLUMN_RETAILER_ID +" = " + clickedRetailerId;
 
-
         locationValues.put(RetailersEntry.COLUMN_LOCATION_PRESENT, 1);
         locationValues.put(RetailersEntry.COLUMN_RETAILER_LATITUDE, mLatitude);
         locationValues.put(RetailersEntry.COLUMN_RETAILER_LONGITUDE, mLongitude);
 
         String[] selectionArgs = null;
 
-        int editedrows = mContext.getContentResolver().update(RetailersEntry.UPDATE_LOCATION_URI, locationValues,selection,selectionArgs);
+        int editedrows = mContext.getContentResolver().update(RetailersEntry.UPDATE_URI, locationValues,selection,selectionArgs);
 
     }
 

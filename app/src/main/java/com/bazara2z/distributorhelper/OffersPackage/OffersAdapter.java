@@ -53,7 +53,6 @@ public class OffersAdapter extends BaseAdapter{
             convertView = layoutInflater.inflate(R.layout.offer_list_item_layout, null);
             holder = new ViewHolder();
             holder.offerDetails = (TextView) convertView.findViewById(R.id.offers_offer_details);
-            holder.productName = (TextView) convertView.findViewById(R.id.offers_product_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -61,7 +60,6 @@ public class OffersAdapter extends BaseAdapter{
 
         OffersModel offersModel = this.listData.get(position);
         holder.offerDetails.setText(offersModel.getOfferDetails());
-        holder.productName.setText(offersModel.getProductName());
 
         return convertView;
     }
@@ -69,6 +67,5 @@ public class OffersAdapter extends BaseAdapter{
     static class ViewHolder{
         int id;
         TextView offerDetails;
-        TextView productName;
     }
 }

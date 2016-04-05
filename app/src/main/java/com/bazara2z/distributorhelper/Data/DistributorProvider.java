@@ -27,19 +27,22 @@ public class DistributorProvider extends ContentProvider {
 
     static final int RETAILER_INSERT = 200;
     static final int RETAILER_CHECK = 201;
-    static final int RETAILER_UPDATE_LOCATION = 202;
+    static final int RETAILER_UPDATE = 202;
     static final int RETAILER_BULK_INSERT = 203;
+    static final int RETAILER_DELETE = 203;
 
     static final int PRODUCT_INSERT = 300;
     static final int PRODUCT_CHECK = 301;
     static final int PRODUCT_DISPLAY = 302;
     static final int PRODUCT_BULK_INSERT = 303;
     static final int PRODUCTS_WITH_QUANTITY = 304;
+    static final int PRODUCTS_DELETE = 305;
 
     static final int OFFER_INSERT = 400;
     static final int OFFER_CHECK = 401;
     static final int OFFER_VIEW_WITH_PRODUCTS = 402;
     static final int OFFER_BULK_INSERT = 403;
+    static final int OFFER_DELETE = 404;
 
     static final int ORDER_CHECK = 500;
     static final int ORDER_INSERT = 501;
@@ -48,8 +51,15 @@ public class DistributorProvider extends ContentProvider {
 
     static final int ORDER_ITEM_BULK_INSERT = 600;
     static final int ORDER_ITEM_DELETE = 601;
+    static final int ORDER_ITEM_CHECK = 602;
 
     static final int TRACKING_INSERT = 800;
+    static final int TRACKING_CHECK = 801;
+    static final int TRACKING_UPDATE = 802;
+    static final int TRACKING_CHECK_WITH_RETAILERS = 803;
+
+    static final int SYNC_INTIAL_INSERT = 900;
+    static final int SYNC_EXIST_CHECK = 901;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -67,19 +77,22 @@ public class DistributorProvider extends ContentProvider {
 
         matcher.addURI(authority, DistributorContract.PATH_RETAILERS + "/" + RetailersEntry.INSERT, RETAILER_INSERT);
         matcher.addURI(authority, DistributorContract.PATH_RETAILERS + "/" + RetailersEntry.CHECK, RETAILER_CHECK);
-        matcher.addURI(authority, DistributorContract.PATH_RETAILERS + "/" + RetailersEntry.UPDATE_LOCATION, RETAILER_UPDATE_LOCATION);
+        matcher.addURI(authority, DistributorContract.PATH_RETAILERS + "/" + RetailersEntry.UPDATE, RETAILER_UPDATE);
         matcher.addURI(authority, DistributorContract.PATH_RETAILERS + "/" + RetailersEntry.BULK_INSERT, RETAILER_BULK_INSERT);
+        matcher.addURI(authority, DistributorContract.PATH_RETAILERS + "/" + RetailersEntry.DELETE, RETAILER_DELETE);
 
         matcher.addURI(authority, DistributorContract.PATH_PRODUCTS + "/" + ProductsEntry.INSERT, PRODUCT_INSERT);
         matcher.addURI(authority, DistributorContract.PATH_PRODUCTS + "/" + ProductsEntry.CHECK, PRODUCT_CHECK);
         matcher.addURI(authority, DistributorContract.PATH_PRODUCTS + "/" + ProductsEntry.DISPLAY, PRODUCT_DISPLAY);
         matcher.addURI(authority, DistributorContract.PATH_PRODUCTS + "/" + ProductsEntry.BULK_INSERT, PRODUCT_BULK_INSERT);
         matcher.addURI(authority, DistributorContract.PATH_PRODUCTS + "/" + ProductsEntry.PRODUCTS_WITH_QUANTITY, PRODUCTS_WITH_QUANTITY);
+        matcher.addURI(authority, DistributorContract.PATH_PRODUCTS + "/" + ProductsEntry.DELETE, PRODUCTS_DELETE);
 
         matcher.addURI(authority, DistributorContract.PATH_OFFERS + "/" + OffersEntry.INSERT, OFFER_INSERT);
         matcher.addURI(authority, DistributorContract.PATH_OFFERS + "/" + OffersEntry.CHECK, OFFER_CHECK);
         matcher.addURI(authority, DistributorContract.PATH_OFFERS + "/" + OffersEntry.VIEW_WITH_PRODUCTS, OFFER_VIEW_WITH_PRODUCTS);
         matcher.addURI(authority, DistributorContract.PATH_OFFERS + "/" + OffersEntry.BULK_INSERT, OFFER_BULK_INSERT);
+        matcher.addURI(authority, DistributorContract.PATH_OFFERS + "/" + OffersEntry.DELETE, OFFER_DELETE);
 
         matcher.addURI(authority, DistributorContract.PATH_ORDERS + "/" + OrdersEntry.CHECK, ORDER_CHECK);
         matcher.addURI(authority, DistributorContract.PATH_ORDERS + "/" + OrdersEntry.INSERT, ORDER_INSERT);
@@ -88,15 +101,21 @@ public class DistributorProvider extends ContentProvider {
 
         matcher.addURI(authority, DistributorContract.PATH_ORDER_ITEMS + "/" + OrderItemsEntry.BULK_INSERT, ORDER_ITEM_BULK_INSERT);
         matcher.addURI(authority, DistributorContract.PATH_ORDER_ITEMS + "/" + OrderItemsEntry.DELETE, ORDER_ITEM_DELETE);
+        matcher.addURI(authority, DistributorContract.PATH_ORDER_ITEMS + "/" + OrderItemsEntry.CHECK, ORDER_ITEM_CHECK);
 
         matcher.addURI(authority, DistributorContract.PATH_TRACKING + "/" + TrackingEntry.INSERT, TRACKING_INSERT);
+        matcher.addURI(authority, DistributorContract.PATH_TRACKING + "/" + TrackingEntry.CHECK, TRACKING_CHECK);
+        matcher.addURI(authority, DistributorContract.PATH_TRACKING + "/" + TrackingEntry.UPDATE, TRACKING_UPDATE);
+        matcher.addURI(authority, DistributorContract.PATH_TRACKING + "/" + TrackingEntry.CHECK_WITH_RETAILERS, TRACKING_CHECK_WITH_RETAILERS);
+
+        matcher.addURI(authority, DistributorContract.PATH_SYNC_STATES + "/" + SyncStatesEntry.BULK_INSERT, SYNC_INTIAL_INSERT);
+        matcher.addURI(authority, DistributorContract.PATH_SYNC_STATES + "/" + SyncStatesEntry.CHECK, SYNC_EXIST_CHECK);
 
         return matcher;
     }
+
     private DistributorDBHelper mOpenHelper;
 
-
-    //private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
 
     @Override
     public boolean onCreate() {
@@ -139,23 +158,8 @@ public class DistributorProvider extends ContentProvider {
                         projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
-            case OFFER_VIEW_WITH_PRODUCTS:{
-                final SQLiteQueryBuilder offerWithProductsQueryBuilder = new SQLiteQueryBuilder();
-                offerWithProductsQueryBuilder.setTables(OffersEntry.TABLE_NAME + " LEFT JOIN " +
-                        ProductsEntry.TABLE_NAME + " ON " + OffersEntry.TABLE_NAME  + "." +
-                        OffersEntry.COLUMN_PRODUCT_ID + " = " + ProductsEntry.TABLE_NAME + "." +
-                        ProductsEntry.COLUMN_PRODUCT_ID);
-                retCursor = offerWithProductsQueryBuilder.query(mOpenHelper.getReadableDatabase(),
-                        projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            }
             case PRODUCT_DISPLAY:{
-                final SQLiteQueryBuilder productDisplayQueryBuilder = new SQLiteQueryBuilder();
-                productDisplayQueryBuilder.setTables(ProductsEntry.TABLE_NAME + " LEFT JOIN " +
-                        OffersEntry.TABLE_NAME + " ON " + ProductsEntry.TABLE_NAME  + "." +
-                        ProductsEntry.COLUMN_PRODUCT_ID + " = " + OffersEntry.TABLE_NAME + "." +
-                        OffersEntry.COLUMN_PRODUCT_ID);
-                retCursor = productDisplayQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                retCursor = mOpenHelper.getReadableDatabase().query(ProductsEntry.TABLE_NAME,
                         projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
@@ -164,29 +168,22 @@ public class DistributorProvider extends ContentProvider {
                         projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
+            case ORDER_ITEM_CHECK:{
+                retCursor = mOpenHelper.getReadableDatabase().query(OrderItemsEntry.TABLE_NAME,
+                        projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            }
             case DISPLAY_ORDER:{
                 final SQLiteQueryBuilder orderDisplayQueryBuilder = new SQLiteQueryBuilder();
                 orderDisplayQueryBuilder.setTables(OrdersEntry.TABLE_NAME + " LEFT JOIN " +
                         RetailersEntry.TABLE_NAME + " ON " + OrdersEntry.TABLE_NAME  + "." +
                         OrdersEntry.COLUMN_RETAILER_ID + " = " + RetailersEntry.TABLE_NAME + "." +
-                        RetailersEntry.COLUMN_RETAILER_ID);
+                        RetailersEntry._ID);
                 retCursor = orderDisplayQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                         projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
             case PRODUCTS_WITH_QUANTITY:{
-                /*
-                final SQLiteQueryBuilder productDisplayQueryBuilder = new SQLiteQueryBuilder();
-                productDisplayQueryBuilder.setTables(ProductsEntry.TABLE_NAME + " LEFT JOIN " +
-                        OrderItemsEntry.TABLE_NAME + " ON " + ProductsEntry.TABLE_NAME  + "." +
-                        ProductsEntry.COLUMN_PRODUCT_ID + " = " + OrderItemsEntry.TABLE_NAME + "." +
-                        OrderItemsEntry.COLUMN_PRODUCT_ID  + " LEFT JOIN " +
-                        OffersEntry.TABLE_NAME + " ON " + ProductsEntry.TABLE_NAME  + "." +
-                        ProductsEntry.COLUMN_PRODUCT_ID + " = " + OffersEntry.TABLE_NAME + "." +
-                        OffersEntry.COLUMN_PRODUCT_ID);
-                retCursor = productDisplayQueryBuilder.query(mOpenHelper.getReadableDatabase(),
-                        projection, selection, selectionArgs, null, null, sortOrder);
-                */
 
                 String TEMP_TABLE = "temp_table";
                 int orderId = Integer.valueOf(selection);
@@ -194,12 +191,8 @@ public class DistributorProvider extends ContentProvider {
                 String QUERY = "SELECT " + ProductsEntry.TABLE_NAME + "." + ProductsEntry.COLUMN_PRODUCT_ID
                         + ", " + ProductsEntry.TABLE_NAME + "." + ProductsEntry.COLUMN_PRODUCT_NAME
                         + ", " + ProductsEntry.TABLE_NAME + "." + ProductsEntry.COLUMN_PRICE_PER_UNIT
-                        + ", " + OffersEntry.TABLE_NAME + "." + OffersEntry.COLUMN_OFFER_DETAILS
                         + ", " + TEMP_TABLE + "." + OrderItemsEntry.COLUMN_QUANTITY
                         + " FROM " + ProductsEntry.TABLE_NAME
-                        + " LEFT JOIN " + OffersEntry.TABLE_NAME + " ON "
-                        + ProductsEntry.TABLE_NAME + "." + ProductsEntry.COLUMN_PRODUCT_ID + " = "
-                        + OffersEntry.TABLE_NAME + "." + OffersEntry.COLUMN_PRODUCT_ID
                         + " LEFT JOIN " + " ( "
                         + " SELECT " + OrderItemsEntry.TABLE_NAME + "." + OrderItemsEntry.COLUMN_QUANTITY
                         + ", " + OrderItemsEntry.TABLE_NAME + "." + OrderItemsEntry.COLUMN_PRODUCT_ID
@@ -211,6 +204,26 @@ public class DistributorProvider extends ContentProvider {
                         + TEMP_TABLE + "." + ProductsEntry.COLUMN_PRODUCT_ID + ";";
 
                 retCursor = db.rawQuery(QUERY,null);
+                break;
+            }
+            case SYNC_EXIST_CHECK:{
+                retCursor = mOpenHelper.getReadableDatabase().query(SyncStatesEntry.TABLE_NAME,
+                        projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            }
+            case TRACKING_CHECK:{
+                retCursor = mOpenHelper.getReadableDatabase().query(TrackingEntry.TABLE_NAME,
+                        projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            }
+            case TRACKING_CHECK_WITH_RETAILERS:{
+                final SQLiteQueryBuilder checkWithRetailersQueryBuilder = new SQLiteQueryBuilder();
+                checkWithRetailersQueryBuilder.setTables(TrackingEntry.TABLE_NAME + " LEFT JOIN " +
+                        RetailersEntry.TABLE_NAME + " ON " + TrackingEntry.TABLE_NAME  + "." +
+                        TrackingEntry.COLUMN_RETAILER_ID + " = " + RetailersEntry.TABLE_NAME + "." +
+                        RetailersEntry._ID);
+                retCursor = checkWithRetailersQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                        projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
             default:
@@ -295,13 +308,18 @@ public class DistributorProvider extends ContentProvider {
                 rowsUpdated = db.update(UserEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
-            case RETAILER_UPDATE_LOCATION:{
+            case RETAILER_UPDATE:{
                 rowsUpdated = db.update(RetailersEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
             }
             case UPDATE_ORDER:{
                 rowsUpdated = db.update(OrdersEntry.TABLE_NAME, values, selection,
+                        selectionArgs);
+                break;
+            }
+            case TRACKING_UPDATE:{
+                rowsUpdated = db.update(TrackingEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
             }
@@ -325,6 +343,15 @@ public class DistributorProvider extends ContentProvider {
 
         switch (match) {
             case USER_DELETE:
+                rowsDeleted = db.delete(UserEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case RETAILER_DELETE:
+                rowsDeleted = db.delete(UserEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case PRODUCTS_DELETE:
+                rowsDeleted = db.delete(UserEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case OFFER_DELETE:
                 rowsDeleted = db.delete(UserEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case ORDER_ITEM_DELETE:
@@ -402,6 +429,23 @@ public class DistributorProvider extends ContentProvider {
                 try {
                     for (ContentValues value : values) {
                         long _id = db.insert(OrderItemsEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
+            case SYNC_INTIAL_INSERT:{
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (ContentValues value : values) {
+                        long _id = db.insert(SyncStatesEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
                         }

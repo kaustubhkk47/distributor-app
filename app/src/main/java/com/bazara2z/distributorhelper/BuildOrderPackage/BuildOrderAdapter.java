@@ -59,7 +59,6 @@ public class BuildOrderAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.build_order_list_item_layout, null);
             holder = new ViewHolder();
-            holder.offerDetails = (TextView) convertView.findViewById(R.id.build_order_offer_details);
             holder.productName = (TextView) convertView.findViewById(R.id.build_order_product_name);
             holder.pricePerUnit = (TextView) convertView.findViewById(R.id.build_order_price_per_unit);
             holder.addButton = (Button) convertView.findViewById(R.id.build_order_add_button);
@@ -74,21 +73,14 @@ public class BuildOrderAdapter extends BaseAdapter {
 
         BuildOrderModel buildOrderModel = this.listData.get(position);
         Double pricePerUnit = buildOrderModel.getPricePerUnit();
-        String offerDetails = buildOrderModel.getOfferDetails();
 
-        holder.offerDetails.setText(offerDetails);
+
         holder.productName.setText(buildOrderModel.getProductName());
         holder.pricePerUnit.setText(String.valueOf(pricePerUnit));
         holder.quantity.setText(String.valueOf(buildOrderModel.getQuantity()));
         holder.id = position;
 
 
-        if (offerDetails == null){
-            holder.offerDetails.setVisibility(View.GONE);
-        }
-        else {
-            holder.offerDetails.setVisibility(View.VISIBLE);
-        }
 
         holder.quantity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +171,6 @@ public class BuildOrderAdapter extends BaseAdapter {
 
     static class ViewHolder{
         int id;
-        TextView offerDetails;
         TextView productName;
         TextView pricePerUnit;
         Button quantity;

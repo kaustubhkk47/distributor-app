@@ -28,6 +28,7 @@ import com.bazara2z.distributorhelper.BuildOrderPackage.BuildOrderModel;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
 import com.bazara2z.distributorhelper.R;
+import com.bazara2z.distributorhelper.SyncAdapter.SyncFunctions;
 
 
 public class OrderSummaryFragment extends Fragment {
@@ -45,6 +46,9 @@ public class OrderSummaryFragment extends Fragment {
     Button modifiedPrice;
     OrderSummaryModel orderSummaryModel;
     Context context;
+    Context mContext;
+
+    private SyncFunctions syncFunctions;
 
     public static OrderSummaryFragment newInstance() {
         List<BuildOrderModel> buildOrderModelList = new ArrayList<BuildOrderModel>();
@@ -52,7 +56,6 @@ public class OrderSummaryFragment extends Fragment {
         OrderSummaryFragment fragment = new OrderSummaryFragment(buildOrderModelList,orderSummaryModel);
         return fragment;
     }
-
 
     public OrderSummaryFragment(List<BuildOrderModel> buildOrderModelList, OrderSummaryModel orderSummaryModel) {
         this.buildOrderModelList = buildOrderModelList;
@@ -68,6 +71,8 @@ public class OrderSummaryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         context = getActivity();
+        mContext = context.getApplicationContext();
+        syncFunctions = new SyncFunctions(mContext);
     }
 
     @Override
@@ -126,9 +131,13 @@ public class OrderSummaryFragment extends Fragment {
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
 
+                Log.w(LOG_TAG, "Alert dialog created");
+
                 alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
                 alertDialog.show();
+
+                Log.w(LOG_TAG, "Alert dialog shown");
 
 
             }
@@ -235,6 +244,7 @@ public class OrderSummaryFragment extends Fragment {
             orderValues.put(OrdersEntry.COLUMN_ORDER_CREATION_TIME, nowTime);
             orderValues.put(OrdersEntry.COLUMN_ORDER_UPDATION_TIME, 0.0);
             orderValues.put(OrdersEntry.COLUMN_PRODUCT_COUNT, orderSummaryModel.getProductCount());
+            orderValues.put(OrdersEntry.COLUMN_ORDER_ID, 1);
 
             Uri insertedUri = context.getContentResolver().insert(OrdersEntry.INSERT_URI, orderValues);
 
@@ -245,7 +255,7 @@ public class OrderSummaryFragment extends Fragment {
 
             orderValues.put(OrdersEntry.COLUMN_TOTAL_PRICE, orderSummaryModel.getTotalPrice());
             orderValues.put(OrdersEntry.COLUMN_MODIFIED_PRICE, orderSummaryModel.getModifiedPrice());
-            orderValues.put(OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS, 0);
+
             orderValues.put(OrdersEntry.COLUMN_ORDER_UPDATION_TIME, nowTime);
             orderValues.put(OrdersEntry.COLUMN_PRODUCT_COUNT, orderSummaryModel.getProductCount());
 
@@ -290,7 +300,9 @@ public class OrderSummaryFragment extends Fragment {
 
             context.getContentResolver().bulkInsert(OrderItemsEntry.BULK_INSERT_URI, cvArray);
 
-            Log.w(LOG_TAG,"Inserted order items");
+            Log.w(LOG_TAG, "Inserted order items");
+
+            syncFunctions.getUnsyncedRetailerData();
         }
     }
 

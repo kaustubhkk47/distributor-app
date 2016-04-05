@@ -8,6 +8,7 @@ public class ProductsDisplayModel {
     public int id;
     public String offerDetails;
     public String productName;
+    public String unit;
     public double pricePerUnit;
 
     public ProductsDisplayModel(){
@@ -51,5 +52,13 @@ public class ProductsDisplayModel {
 
     public void setPricePerUnit(double pricePerUnit){
         this.pricePerUnit = pricePerUnit;
+    }
+
+    public String getUnit(){
+        return unit;
+    }
+
+    public void setUnit(String unit){
+        this.unit = unit;
     }
 }

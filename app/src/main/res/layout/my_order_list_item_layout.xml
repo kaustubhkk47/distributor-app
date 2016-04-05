@@ -32,6 +32,7 @@
             android:text="Product Count :  "
             android:layout_marginLeft="45dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -40,6 +41,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:id="@+id/my_order_product_count"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -48,6 +50,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="  products"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
     </LinearLayout>
@@ -66,6 +69,7 @@
             android:text="Total Price :  "
             android:layout_marginLeft="45dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -74,6 +78,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:id="@+id/my_order_total_price"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -82,6 +87,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="  Rs."
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
     </LinearLayout>
@@ -100,6 +106,7 @@
             android:text="Edited Price :  "
             android:layout_marginLeft="45dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -108,6 +115,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:id="@+id/my_order_edited_price"
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
         <TextView
@@ -116,6 +124,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="  Rs."
             android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
             />
 
     </LinearLayout>
@@ -136,6 +145,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="5dp" android:text="Edit"
             android:textStyle="bold"
+            android:textColor="@color/primary_dark"
             />
 
         <LinearLayout

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_order_button_text">ADD NEW ORDER</string>
+    <string name="place_order_button_text">PLACE NEW ORDER</string>
+    <string name="add_retailer_button_text">ADD RETAILER</string>
 </resources>
