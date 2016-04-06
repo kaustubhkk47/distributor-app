@@ -704,6 +704,7 @@ public class SyncFunctions {
 
         }
         else {
+            Log.w(LOG_TAG, "No unsynced retailers");
             afterRetailerUpdate();
         }
 
@@ -1139,6 +1140,7 @@ public class SyncFunctions {
 
         }
         else {
+            Log.w(LOG_TAG, "No unsynced tracking");
             afterTrackingUpdate();
         }
 
@@ -1168,8 +1170,9 @@ public class SyncFunctions {
                             JSONObject bodyJSON = new JSONObject(body);
 
                             if (statusCode.equals(CORRECT_RESPONSE_CODE)) {
-                                updateTrackingData();
                                 Log.w(LOG_TAG, "Tracking data successfully received");
+                                updateTrackingData();
+
                             } else {
                                 Log.w(LOG_TAG, "Status code was : " + statusCode);
                                 String error = bodyJSON.getString("error");
@@ -1237,8 +1240,10 @@ public class SyncFunctions {
         String selection = DistributorContract.RetailersEntry.COLUMN_RETAILER_EDITED + " = 1";
 
         Cursor cursor = mContext.getContentResolver().query(DistributorContract.RetailersEntry.CHECK_URI, columns, selection, null, null);
+        Log.w(LOG_TAG, "The number of edited retailers is " +  cursor.getCount());
 
         if (cursor.getCount() > 0){
+
             for (int i = 0; i < cursor.getCount(); i++) {
 
                 cursor.moveToNext();
@@ -1415,6 +1420,5 @@ public class SyncFunctions {
     public void afterEditedRetailerUpdate(){
 
     }
-
 
 }

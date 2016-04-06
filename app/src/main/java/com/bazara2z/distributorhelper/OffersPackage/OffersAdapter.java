@@ -25,7 +25,7 @@ public class OffersAdapter extends BaseAdapter{
     private List<OffersModel>  listData;
 
     public OffersAdapter(Context context, List<OffersModel> listData){
-        Log.w(LOG_TAG, "OffersAdapter created");
+
         this.context = context;
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);

@@ -44,7 +44,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 public class SelectRetailer extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private final String LOG_TAG = "ProductsDisplayActivity";
+    private final String LOG_TAG = "SelectRetailerActivity";
 
     List<SelectRetailerModel> selectRetailerModelList;
     SelectRetailerAdapter selectRetailerAdapter;
@@ -326,7 +326,7 @@ public class SelectRetailer extends AppCompatActivity implements
     public void updateRetailerLocation(){
         ContentValues locationValues = new ContentValues();
 
-        String selection = RetailersEntry.COLUMN_RETAILER_ID +" = " + clickedRetailerId;
+        String selection = RetailersEntry._ID +" = " + clickedRetailerId;
 
         locationValues.put(RetailersEntry.COLUMN_LOCATION_PRESENT, 1);
         locationValues.put(RetailersEntry.COLUMN_RETAILER_LATITUDE, mLatitude);
@@ -336,6 +336,7 @@ public class SelectRetailer extends AppCompatActivity implements
         String[] selectionArgs = null;
 
         int editedrows = mContext.getContentResolver().update(RetailersEntry.UPDATE_URI, locationValues,selection,selectionArgs);
+        Log.w(LOG_TAG, "Retailer location updated for " + editedrows + " retailers");
 
     }
 
@@ -497,6 +498,7 @@ public class SelectRetailer extends AppCompatActivity implements
             newOrder = 0;
 
         }
+        cursor.close();
 
     }
 }

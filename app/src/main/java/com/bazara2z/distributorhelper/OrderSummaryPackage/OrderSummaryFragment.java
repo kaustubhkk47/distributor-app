@@ -108,7 +108,7 @@ public class OrderSummaryFragment extends Fragment {
                         .findViewById(R.id.orderSummaryDialogUserInput);
 
 
-                Log.w(LOG_TAG, "Button clicked");
+                //Log.w(LOG_TAG, "Button clicked");
 
                 alertDialogBuilder
                         .setCancelable(false)

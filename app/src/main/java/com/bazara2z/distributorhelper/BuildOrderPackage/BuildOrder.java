@@ -230,7 +230,7 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
         }
         BuildOrderModel buildOrderModel;
 
-        Log.w(LOG_TAG, "The number of items fetched is " + String.valueOf(cursor.getCount()));
+        Log.w(LOG_TAG, "The number of products fetched is " + String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0){
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -308,7 +308,7 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
         Log.w(LOG_TAG, "Product count refreshed to " + productCount);
         Log.w(LOG_TAG, "Total price refreshed to " + totalPrice);
         */
-        Log.w(LOG_TAG, "Size of OrderSummaryModelList is " + orderSummaryModelList.size());
+        //Log.w(LOG_TAG, "Size of OrderSummaryModelList is " + orderSummaryModelList.size());
     }
 
     @Override

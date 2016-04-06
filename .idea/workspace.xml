@@ -33,8 +33,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1489483-e016-493a-99b8-6059516c690b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailer.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DistributorHelper.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,11 +66,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SyncFunctions.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BuildOrder.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5222222">
+              <caret line="232" column="46" selection-start-line="232" selection-start-column="46" selection-end-line="232" selection-end-column="46" />
+              <folding>
+                <element signature="method#onFragmentInteraction#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#onOrderSummaryFragmentInteraction#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#onCreateOptionsMenu#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#onOptionsItemSelected#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#onTabSelected#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#onTabReselected#0;class#BuildOrder#0" expanded="false" />
+                <element signature="class#SectionsPagerAdapter#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#populateOrderSummaryModel#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#onBackPressed#0;class#BuildOrder#0" expanded="false" />
+                <element signature="method#setActivityTitle#0;class#BuildOrder#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SyncFunctions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.015817223">
-              <caret line="1076" column="37" selection-start-line="1076" selection-start-column="37" selection-end-line="1076" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1396" column="28" selection-start-line="1396" selection-start-column="28" selection-end-line="1396" selection-end-column="28" />
               <folding>
                 <element signature="docComment;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#getRetailerData#0;class#SyncFunctions#0" expanded="false" />
@@ -89,18 +114,40 @@
                 <element signature="method#sendRetailerData#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#updateRetailerData#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#getUnsyncedOrders#0;class#SyncFunctions#0" expanded="false" />
-                <element signature="e#29653#29662#0" expanded="true" />
+                <element signature="e#29706#29715#0" expanded="true" />
                 <element signature="method#constructOrderJSON#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#sendOrdersData#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#updateOrdersData#0;class#SyncFunctions#0" expanded="false" />
-                <element signature="e#36926#36935#0" expanded="true" />
+                <element signature="e#36979#36988#0" expanded="true" />
                 <element signature="method#getUnsyncedTracking#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#sendTrackingData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="class#41356:43219" expanded="false" />
                 <element signature="method#updateTrackingData#0;class#SyncFunctions#0" expanded="false" />
-                <element signature="method#getEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#sendEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#updateEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
                 <element signature="method#afterEditedRetailerUpdate#0;class#SyncFunctions#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderSummaryFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="80" column="23" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="23" />
+              <folding>
+                <element signature="method#newInstance#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#OrderSummaryFragment#1;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#onButtonPressed#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#refreshViews#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#onAttach#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#onDetach#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="class#OnFragmentInteractionListener#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#isNumberValid#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#writeToDB#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#parseIdFromUri#0;class#OrderSummaryFragment#0" expanded="false" />
+                <element signature="method#showAlertDialog#0;class#OrderSummaryFragment#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -1858,7 +1905,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_order_summary.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/theme_background.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_select_retailer.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/offer_list_item_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings_activity_login.xml" />
@@ -1876,18 +1922,19 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/ProductsDisplayPackage/ProductsDisplayAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/ProductsDisplayPackage/ProductsDisplayFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorProvider.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/MyOrdersPackage/MyOrders.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SplashScreenPackage/SplashScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Miscellaneous/MiscellaneousValues.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/LoginActivityPackage/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorContract.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorDBHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/AddRetailerPackage/AddRetailer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java" />
       </list>
     </option>
   </component>
@@ -2042,6 +2089,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="SelectRetailerPackage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DistributorHelper" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="distributorhelper" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BuildOrderPackage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2285,10 +2354,10 @@
   <component name="PropertiesComponent">
     <property name="com.android.studio.selected.modules.on.import" value="DistributorHelper&#10;app" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="F1AZFG033447" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4df7334c7d4a40db" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_4_API_22" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../WifiBeaconTest" />
-    <property name="SearchEverywhereHistoryKey" value="S&#9;FILE&#9;file://C:/Users/Maddy/AndroidStudioProjects/DistributorHelper/app/src/main/res/layout/offer_list_item_layout.xml" />
+    <property name="SearchEverywhereHistoryKey" value="The number of items fetched is&#9;null&#9;null&#10;S&#9;FILE&#9;file://C:/Users/Maddy/AndroidStudioProjects/DistributorHelper/app/src/main/res/layout/offer_list_item_layout.xml" />
     <property name="FullScreen" value="false" />
   </component>
   <component name="RecentsManager">
@@ -2593,7 +2662,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java</url>
-          <line>1210</line>
+          <line>1213</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
@@ -2609,8 +2678,14 @@
           <properties />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java</url>
+          <line>647</line>
+          <properties />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="38" />
+      <option name="time" value="39" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2742,23 +2817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.5834798">
           <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26537785">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -2909,14 +2967,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20913884">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5782074">
@@ -2943,27 +2993,6 @@
           <folding>
             <element signature="e#1771#1772#0" expanded="false" />
             <element signature="e#1803#1804#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.23374341">
-          <caret line="40" column="19" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
-          <folding>
-            <element signature="method#onFragmentInteraction#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onOrderSummaryFragmentInteraction#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onCreate#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onCreateOptionsMenu#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onOptionsItemSelected#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onTabSelected#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onTabReselected#0;class#BuildOrder#0" expanded="false" />
-            <element signature="class#SectionsPagerAdapter#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#refreshOrderSummaryModel#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#onBackPressed#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#cancelOrderConfirmAlert#0;class#BuildOrder#0" expanded="false" />
-            <element signature="method#setActivityTitle#0;class#BuildOrder#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3029,34 +3058,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.4340949">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7768014">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-          <folding>
-            <element signature="method#newInstance#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#OrderSummaryFragment#1;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#onButtonPressed#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#refreshViews#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#onAttach#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#onDetach#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="class#OnFragmentInteractionListener#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#isNumberValid#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#writeToDB#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#parseIdFromUri#0;class#OrderSummaryFragment#0" expanded="false" />
-            <element signature="method#showAlertDialog#0;class#OrderSummaryFragment#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/LoginActivityPackage/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5518454">
@@ -3079,28 +3080,6 @@
             <element signature="method#checkLogin#0;class#SplashScreen#0" expanded="false" />
             <element signature="method#insertSampleData#0;class#SplashScreen#0" expanded="false" />
             <element signature="method#createSyncTable#0;class#SplashScreen#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/AddRetailerPackage/AddRetailer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6414763">
-          <caret line="374" column="70" selection-start-line="374" selection-start-column="70" selection-end-line="374" selection-end-column="70" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#onCreate#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#onCreateOptionsMenu#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#onOptionsItemSelected#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#attemptAddRetailer#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#isPincodeValid#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#isPhoneNoValid#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#LocationConfirmAlert#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#addLocationListener#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#onConnected#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#onConnectionFailed#0;class#AddRetailer#0" expanded="false" />
-            <element signature="method#onConnectionSuspended#0;class#AddRetailer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3130,21 +3109,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/AddRetailerPackage/AddRetailer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.2407732">
+          <caret line="374" column="70" selection-start-line="374" selection-start-column="70" selection-end-line="374" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onCreate#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#attemptAddRetailer#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#isPincodeValid#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#isPhoneNoValid#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#LocationConfirmAlert#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#onActivityResult#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#addLocationListener#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#onConnected#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#onConnectionFailed#0;class#AddRetailer#0" expanded="false" />
+            <element signature="method#onConnectionSuspended#0;class#AddRetailer#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08963093">
+          <caret line="3" column="23" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/OffersFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22037037">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33195022">
+          <caret line="35" column="28" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37434095">
-          <caret line="325" column="40" selection-start-line="325" selection-start-column="40" selection-end-line="325" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.29876977">
+          <caret line="46" column="50" selection-start-line="46" selection-start-column="50" selection-end-line="46" selection-end-column="50" />
           <folding>
-            <element signature="e#3183#3250#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3182#3249#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#onOptionsItemSelected#0;class#SelectRetailer#0" expanded="false" />
-            <element signature="method#getAllRetailers#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#getLocation#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#getLocationFinal#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#onActivityResult#0;class#SelectRetailer#0" expanded="false" />
-            <element signature="method#writeTrackingEntry#0;class#SelectRetailer#0" expanded="false" />
-            <element signature="method#checkRetailerLocation#0;class#SelectRetailer#0" expanded="false" />
-            <element signature="method#passIntent#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#LocationConfirmAlert#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#editOrderConfirmAlert#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#addLocationListener#0;class#SelectRetailer#0" expanded="false" />
@@ -3153,15 +3183,14 @@
             <element signature="method#onConnectionSuspended#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#showAlertDialog#0;class#SelectRetailer#0" expanded="false" />
             <element signature="method#onStop#0;class#SelectRetailer#0" expanded="false" />
-            <element signature="method#checkNewOrder#0;class#SelectRetailer#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.015817223">
-          <caret line="1076" column="37" selection-start-line="1076" selection-start-column="37" selection-end-line="1076" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1396" column="28" selection-start-line="1396" selection-start-column="28" selection-end-line="1396" selection-end-column="28" />
           <folding>
             <element signature="docComment;class#SyncFunctions#0" expanded="false" />
             <element signature="method#getRetailerData#0;class#SyncFunctions#0" expanded="false" />
@@ -3184,18 +3213,57 @@
             <element signature="method#sendRetailerData#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#updateRetailerData#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#getUnsyncedOrders#0;class#SyncFunctions#0" expanded="false" />
-            <element signature="e#29653#29662#0" expanded="true" />
+            <element signature="e#29706#29715#0" expanded="true" />
             <element signature="method#constructOrderJSON#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#sendOrdersData#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#updateOrdersData#0;class#SyncFunctions#0" expanded="false" />
-            <element signature="e#36926#36935#0" expanded="true" />
+            <element signature="e#36979#36988#0" expanded="true" />
             <element signature="method#getUnsyncedTracking#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#sendTrackingData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="class#41356:43219" expanded="false" />
             <element signature="method#updateTrackingData#0;class#SyncFunctions#0" expanded="false" />
-            <element signature="method#getEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#sendEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#updateEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
             <element signature="method#afterEditedRetailerUpdate#0;class#SyncFunctions#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="23" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="23" />
+          <folding>
+            <element signature="method#newInstance#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#OrderSummaryFragment#1;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onButtonPressed#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#refreshViews#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onAttach#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onDetach#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="class#OnFragmentInteractionListener#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#isNumberValid#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#writeToDB#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#parseIdFromUri#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#showAlertDialog#0;class#OrderSummaryFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5222222">
+          <caret line="232" column="46" selection-start-line="232" selection-start-column="46" selection-end-line="232" selection-end-column="46" />
+          <folding>
+            <element signature="method#onFragmentInteraction#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#onOrderSummaryFragmentInteraction#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#onTabSelected#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#onTabReselected#0;class#BuildOrder#0" expanded="false" />
+            <element signature="class#SectionsPagerAdapter#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#populateOrderSummaryModel#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#onBackPressed#0;class#BuildOrder#0" expanded="false" />
+            <element signature="method#setActivityTitle#0;class#BuildOrder#0" expanded="false" />
           </folding>
         </state>
       </provider>
