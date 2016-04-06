@@ -1090,7 +1090,7 @@ public class SyncFunctions {
         Double trackedLongitude;
 
         String[] columns = {DistributorContract.RetailersEntry.TABLE_NAME + "." +DistributorContract.RetailersEntry.COLUMN_RETAILER_ID, DistributorContract.TrackingEntry.COLUMN_TRACKED_LATITUDE,
-                DistributorContract.TrackingEntry.COLUMN_TRACKED_LONGITUDE, DistributorContract.TrackingEntry.COLUMN_TRACKED_TIME};
+                DistributorContract.TrackingEntry.COLUMN_TRACKED_LONGITUDE, DistributorContract.TrackingEntry.COLUMN_TRACKED_TIME, DistributorContract.RetailersEntry.COLUMN_SHOP_NAME};
 
         String selection = DistributorContract.TrackingEntry.TABLE_NAME + "." + DistributorContract.TrackingEntry.COLUMN_UPLOAD_SYNC_STATUS + " = 0" ;
 
@@ -1107,12 +1107,15 @@ public class SyncFunctions {
                 trackedTime = cursor.getLong(cursor.getColumnIndex(DistributorContract.TrackingEntry.COLUMN_TRACKED_TIME));
                 trackedLatitude = cursor.getDouble(cursor.getColumnIndex(DistributorContract.TrackingEntry.COLUMN_TRACKED_LATITUDE));
                 trackedLongitude = cursor.getDouble(cursor.getColumnIndex(DistributorContract.TrackingEntry.COLUMN_TRACKED_LONGITUDE));
+                String shopName = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_SHOP_NAME));
 
                 try {
                     trackingData.put(KEY_RETAILER_ID, retailerId);
                     trackingData.put(KEY_TRACKED_LATITUDE, trackedLatitude);
                     trackingData.put(KEY_TRACKED_LONGITUDE, trackedLongitude);
                     trackingData.put(KEY_TRACKED_TIME, trackedTime);
+                    trackingData.put(KEY_COMPANY_NAME, shopName);
+
                 } catch (JSONException e) {
                     Log.w(LOG_TAG, e.toString());
                 }
@@ -1140,8 +1143,6 @@ public class SyncFunctions {
         }
 
         cursor.close();
-
-
 
     }
 
@@ -1222,7 +1223,170 @@ public class SyncFunctions {
 
     }
 
+    public void getEditedRetailerData(){
 
+        if (mContext == null){
+            return;
+        }
+
+        String[] columns = {DistributorContract.RetailersEntry._ID, DistributorContract.RetailersEntry.COLUMN_RETAILER_ID,  DistributorContract.RetailersEntry.COLUMN_SHOP_NAME, DistributorContract.RetailersEntry.COLUMN_FIRST_NAME,
+                DistributorContract.RetailersEntry.COLUMN_PHONE_NUMBER, DistributorContract.RetailersEntry.COLUMN_ADDRESS_LINE_1, DistributorContract.RetailersEntry.COLUMN_ADDRESS_LINE_2,
+                DistributorContract.RetailersEntry.COLUMN_LANDMARK, DistributorContract.RetailersEntry.COLUMN_PINCODE, DistributorContract.RetailersEntry.COLUMN_LOCATION_PRESENT,
+                DistributorContract.RetailersEntry.COLUMN_RETAILER_LATITUDE, DistributorContract.RetailersEntry.COLUMN_RETAILER_LONGITUDE};
+
+        String selection = DistributorContract.RetailersEntry.COLUMN_RETAILER_EDITED + " = 1";
+
+        Cursor cursor = mContext.getContentResolver().query(DistributorContract.RetailersEntry.CHECK_URI, columns, selection, null, null);
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++) {
+
+                cursor.moveToNext();
+
+                int retailerId = cursor.getInt(cursor.getColumnIndex(DistributorContract.RetailersEntry._ID));
+                int retailerActualId = cursor.getInt(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_RETAILER_ID));
+                String shopName = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_SHOP_NAME));
+                String firstName = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_FIRST_NAME));
+                String phoneNumber = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_PHONE_NUMBER));
+                String addressLine1 = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_ADDRESS_LINE_1));
+                String addressLine2 = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_ADDRESS_LINE_2));
+                String landmark = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_LANDMARK));
+                String pincode = cursor.getString(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_PINCODE));
+                int locationPresent = cursor.getInt(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_LOCATION_PRESENT));
+                Double latitude = cursor.getDouble(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_RETAILER_LATITUDE));
+                Double longitude = cursor.getDouble(cursor.getColumnIndex(DistributorContract.RetailersEntry.COLUMN_RETAILER_LONGITUDE));
+
+                JSONObject params = new JSONObject();
+
+                try {
+                    params.put(KEY_RETAILER_ID, retailerActualId);
+                    params.put(KEY_COMPANY_NAME, shopName);
+                    params.put(KEY_NAME, firstName);
+                    params.put(KEY_MOBILE_NUMBER, phoneNumber);
+                    params.put(KEY_ADDRESS_LINE_1, addressLine1);
+                    params.put(KEY_ADDRESS_LINE_2, addressLine2);
+                    params.put(KEY_LANDMARK, landmark);
+                    params.put(KEY_PINCODE, pincode);
+                    if (locationPresent == 1) {
+                        params.put(KEY_LATITUDE, latitude);
+                        params.put(KEY_LONGITUDE, longitude);
+                    }
+                } catch (JSONException e){
+                    Log.w(LOG_TAG, e.toString());
+                }
+                final String mRequestBody = params.toString();
+
+                int lastRetailer = 0;
+                if (i == (cursor.getCount() - 1)){
+                    lastRetailer = 1;
+                }
+
+                sendEditedRetailerData(mRequestBody, retailerId, lastRetailer);
+            }
+
+        }
+        else {
+            afterEditedRetailerUpdate();
+        }
+
+        cursor.close();
+
+    }
+
+    public void sendEditedRetailerData(final String mRequestBody, final int retailerId, final int lastRetailer) {
+
+        if (mContext == null){
+            return;
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        String url = RETAILER_UPLOAD_URL + accessTokenUrl();
+
+        StringRequest postRequest = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.w(LOG_TAG, response);
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String statusCode = jsonResponse.getString("statusCode");
+                            String body = jsonResponse.getString("body");
+                            JSONObject bodyJSON = new JSONObject(body);
+
+                            if (statusCode.equals(CORRECT_RESPONSE_CODE)) {
+                                updateEditedRetailerData(body, retailerId, lastRetailer);
+                            } else {
+                                Log.w(LOG_TAG, "Status code was : " + statusCode);
+                                String error = bodyJSON.getString("error");
+                                Log.w(LOG_TAG, "Status code was : " + error);
+                            }
+                        } catch (JSONException e) {
+                            Log.w(LOG_TAG, e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.w(LOG_TAG, error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return mRequestBody == null ? null : mRequestBody.getBytes();
+            }
+
+        };
+
+        queue.add(postRequest);
+
+    }
+
+    public void updateEditedRetailerData(String body, int retailerId, int lastRetailer){
+
+        if (mContext == null){
+            return;
+        }
+
+        JSONObject bodyJSON;
+        JSONArray retailers;
+
+        try {
+            bodyJSON = new JSONObject(body);
+            retailers = bodyJSON.getJSONArray("retailer");
+        }
+        catch (JSONException e){
+            Log.w(LOG_TAG, e.toString());
+            return;
+        }
+
+
+        for (int i = 0; i < retailers.length(); i = i + 1) {
+
+            ContentValues retailerValues = new ContentValues();
+
+            retailerValues.put(DistributorContract.RetailersEntry.COLUMN_RETAILER_EDITED, 0);
+
+
+            String selection = DistributorContract.RetailersEntry._ID +" = " + retailerId;
+            String[] selectionArgs = null;
+
+            int editedrows = mContext.getContentResolver().update(DistributorContract.RetailersEntry.UPDATE_URI, retailerValues,selection,selectionArgs);
+            Log.w(LOG_TAG, "The updated edited retailer rows was " + editedrows);
+
+        }
+
+        if (lastRetailer == 1){
+            afterEditedRetailerUpdate();
+        }
+
+    }
 
     public void afterRetailerUpdate(){
         getUnsyncedOrders();
@@ -1245,6 +1409,10 @@ public class SyncFunctions {
     }
 
     public void afterTrackingUpdate(){
+        getEditedRetailerData();
+    }
+
+    public void afterEditedRetailerUpdate(){
 
     }
 

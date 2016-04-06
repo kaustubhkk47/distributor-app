@@ -331,6 +331,7 @@ public class SelectRetailer extends AppCompatActivity implements
         locationValues.put(RetailersEntry.COLUMN_LOCATION_PRESENT, 1);
         locationValues.put(RetailersEntry.COLUMN_RETAILER_LATITUDE, mLatitude);
         locationValues.put(RetailersEntry.COLUMN_RETAILER_LONGITUDE, mLongitude);
+        locationValues.put(RetailersEntry.COLUMN_RETAILER_EDITED, 1);
 
         String[] selectionArgs = null;
 
