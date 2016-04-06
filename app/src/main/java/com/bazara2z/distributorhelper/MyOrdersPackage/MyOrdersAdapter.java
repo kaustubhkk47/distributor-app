@@ -75,23 +75,45 @@ public class MyOrdersAdapter extends BaseAdapter {
         holder.totalPrice.setText(String.valueOf(orderSummaryModel.getTotalPrice()));
         holder.editedPrice.setText(String.valueOf(orderSummaryModel.getModifiedPrice()));
 
-        holder.editOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (orderSummaryModel.getIsOrderSynced() == 1){
+            holder.editOrder.setText("View");
+            holder.editOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                int retailerId = orderSummaryModel.getRetailerId();
-                int orderId = orderSummaryModel.getOrderId();
-                int newOrder = 0;
+                    int retailerId = orderSummaryModel.getRetailerId();
+                    int orderId = orderSummaryModel.getOrderId();
 
-                Intent intent = new Intent(context, BuildOrder.class);
-                intent.putExtra(DistributorContract.RetailersEntry.COLUMN_RETAILER_ID, retailerId);
-                intent.putExtra(DistributorContract.OrdersEntry._ID, orderId);
-                intent.putExtra("NewOrder", newOrder);
-                context.startActivity(intent);
-                ((Activity)context).finish();
+                    Intent intent = new Intent(context, ViewOrderSummary.class);
 
-            }
-        });
+                    intent.putExtra(DistributorContract.RetailersEntry.COLUMN_RETAILER_ID, retailerId);
+                    intent.putExtra(DistributorContract.OrdersEntry._ID, orderId);
+
+                    context.startActivity(intent);
+                    ((Activity) context).finish();
+
+                }
+            });
+        }
+        else {
+            holder.editOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int retailerId = orderSummaryModel.getRetailerId();
+                    int orderId = orderSummaryModel.getOrderId();
+                    int newOrder = 0;
+
+                    Intent intent = new Intent(context, BuildOrder.class);
+                    intent.putExtra(DistributorContract.RetailersEntry.COLUMN_RETAILER_ID, retailerId);
+                    intent.putExtra(DistributorContract.OrdersEntry._ID, orderId);
+                    intent.putExtra("NewOrder", newOrder);
+                    context.startActivity(intent);
+                    ((Activity) context).finish();
+
+                }
+            });
+        }
 
         return convertView;
     }

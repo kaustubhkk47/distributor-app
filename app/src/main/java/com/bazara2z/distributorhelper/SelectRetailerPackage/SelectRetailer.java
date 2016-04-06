@@ -485,7 +485,7 @@ public class SelectRetailer extends AppCompatActivity implements
 
         Long dayEndTime = cal.getTimeInMillis();
 
-        String[] columns = {OrdersEntry._ID};
+        String[] columns = {OrdersEntry._ID, OrdersEntry.TABLE_NAME + "." + OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS};
         String selection = OrdersEntry.COLUMN_RETAILER_ID +" = " + clickedRetailerId + " AND " +
                 OrdersEntry.COLUMN_ORDER_CREATION_TIME + " >= " + dayStartTime + " AND " +
                 OrdersEntry.COLUMN_ORDER_CREATION_TIME + " < " + dayEndTime;
@@ -494,8 +494,13 @@ public class SelectRetailer extends AppCompatActivity implements
 
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
-            orderId = cursor.getInt(cursor.getColumnIndex(OrdersEntry._ID));
-            newOrder = 0;
+
+            int isOrderSynced = cursor.getInt(cursor.getColumnIndex(OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS));
+
+            if (isOrderSynced == 0) {
+                orderId = cursor.getInt(cursor.getColumnIndex(OrdersEntry._ID));
+                newOrder = 0;
+            }
 
         }
         cursor.close();

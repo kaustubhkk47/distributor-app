@@ -82,6 +82,7 @@ public class MyOrders extends AppCompatActivity {
 
         String[] columns = {RetailersEntry.COLUMN_SHOP_NAME, OrdersEntry.TABLE_NAME +"."+ OrdersEntry.COLUMN_RETAILER_ID,
                 OrdersEntry.COLUMN_PRODUCT_COUNT, OrdersEntry.COLUMN_TOTAL_PRICE,
+                OrdersEntry.TABLE_NAME + "." + OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS,
                 OrdersEntry.COLUMN_MODIFIED_PRICE,OrdersEntry.TABLE_NAME + "." + OrdersEntry._ID};
 
         Cursor cursor = mContext.getContentResolver().query(OrdersEntry.DISPLAY_ORDERS_URI, columns, selection, null, null);
@@ -100,6 +101,7 @@ public class MyOrders extends AppCompatActivity {
                 orderSummaryModel.setTotalPrice(cursor.getDouble(cursor.getColumnIndex(OrdersEntry.COLUMN_TOTAL_PRICE)));
                 orderSummaryModel.setModifiedPrice(cursor.getDouble(cursor.getColumnIndex(OrdersEntry.COLUMN_MODIFIED_PRICE)));
                 orderSummaryModel.setOrderId(cursor.getInt(cursor.getColumnIndex(OrdersEntry._ID)));
+                orderSummaryModel.setIsOrderSynced(cursor.getInt(cursor.getColumnIndex(OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS)));
 
                 orderSummaryModelList.add(orderSummaryModel);
             }

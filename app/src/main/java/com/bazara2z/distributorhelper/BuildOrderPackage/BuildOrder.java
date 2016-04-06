@@ -79,13 +79,7 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
 
         setActivityTitle();
 
-        if (newOrder == 1) {
-            buildOrderModelList = getAllProducts();
-        }
-        else {
-            //TODO: get build Order Model List
-            buildOrderModelList = getAllProducts();
-        }
+        buildOrderModelList = getAllProducts();
 
         populateOrderSummaryModel();
 
@@ -214,7 +208,7 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
     {
         ArrayList<BuildOrderModel> mBuildOrderModelList = new ArrayList<BuildOrderModel>();
 
-        Context mContext = getApplicationContext();
+        //Context mContext = getApplicationContext();
 
         Cursor cursor;
 
@@ -347,7 +341,7 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
 
     public void setActivityTitle(){
         String[] columns = {RetailersEntry.COLUMN_SHOP_NAME};
-        String selection = RetailersEntry.COLUMN_RETAILER_ID +" = " + retailerId;
+        String selection = RetailersEntry._ID +" = " + retailerId;
 
         String retailerName;
 

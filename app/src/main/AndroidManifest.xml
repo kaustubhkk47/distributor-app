@@ -23,19 +23,18 @@
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name=".SplashScreenPackage.SplashScreen"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivityPackage.LoginActivity"
             android:label="@string/title_activity_login"
@@ -97,6 +96,14 @@
             android:label="@string/title_activity_build_order"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name=".MyOrdersPackage.ViewOrderSummary"
+            android:label="@string/title_activity_view_order_summary"
+            android:parentActivityName=".MyOrdersPackage.MyOrders" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bazara2z.distributorhelper.MyOrdersPackage.MyOrders" />
         </activity>
     </application>
 

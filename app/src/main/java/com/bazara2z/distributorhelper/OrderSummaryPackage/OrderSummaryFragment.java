@@ -330,4 +330,5 @@ public class OrderSummaryFragment extends Fragment {
         // Showing Alert Message
         alertDialog.show();
     }
+
 }

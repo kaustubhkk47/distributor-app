@@ -11,6 +11,7 @@ public class OrderSummaryModel {
     public int retailerId;
     public String retailerName;
     public int isNewOrder;
+    public int isOrderSynced;
 
     public int getOrderId(){
         return orderId;
@@ -74,5 +75,13 @@ public class OrderSummaryModel {
 
     public void setIsNewOrder(int isNewOrder){
         this.isNewOrder = isNewOrder;
+    }
+
+    public int getIsOrderSynced(){
+        return this.isOrderSynced;
+    }
+
+    public void setIsOrderSynced(int isOrderSynced){
+        this.isOrderSynced = isOrderSynced;
     }
 }
