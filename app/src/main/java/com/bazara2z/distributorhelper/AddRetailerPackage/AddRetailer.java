@@ -28,6 +28,7 @@ import com.bazara2z.distributorhelper.Data.DistributorContract;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
 import com.bazara2z.distributorhelper.Miscellaneous.MiscellaneousValues;
+import com.bazara2z.distributorhelper.Miscellaneous.Validation;
 import com.bazara2z.distributorhelper.R;
 import com.bazara2z.distributorhelper.SyncAdapter.SyncFunctions;
 import com.google.android.gms.common.ConnectionResult;
@@ -83,6 +84,8 @@ public class AddRetailer extends AppCompatActivity implements
     GoogleApiClient mGoogleApiClient = null;
     LocationRequest mLocationRequest = null;
     private int yesPressed = 0;
+
+    Validation validation = new Validation();
 
 
     @Override
@@ -150,7 +153,7 @@ public class AddRetailer extends AppCompatActivity implements
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(pincode) || !isPincodeValid(pincode)) {
+        if (TextUtils.isEmpty(pincode) || !validation.isPincodeValid(pincode)) {
             mPincode.setError(getString(R.string.error_invalid_pincode));
             focusView = mPincode;
             cancel = true;
@@ -162,7 +165,7 @@ public class AddRetailer extends AppCompatActivity implements
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(phoneNumber) || !isPhoneNoValid(phoneNumber)) {
+        if (TextUtils.isEmpty(phoneNumber) || !validation.isPhoneNoValid(phoneNumber)) {
             mPhoneNumber.setError(getString(R.string.error_invalid_phonenumber));
             focusView = mPhoneNumber;
             cancel = true;
@@ -186,20 +189,6 @@ public class AddRetailer extends AppCompatActivity implements
             LocationConfirmAlert(getString(R.string.location_alert_title), getString(R.string.location_alert_message));
         }
 
-    }
-
-    private boolean isPincodeValid(String pincode){
-        if (pincode.matches("[0-9]+") && pincode.length() == 6){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isPhoneNoValid(String phoneno) {
-        if (phoneno.matches("[0-9]+") && phoneno.length() == 10 && phoneno.substring(0, 1).matches("9|8|7")){
-            return true;
-        }
-        return false;
     }
 
     public void LocationConfirmAlert(String title, String message){

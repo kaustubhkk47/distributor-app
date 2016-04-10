@@ -80,12 +80,27 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 style="@style/custom_button"
                 android:id="@+id/confirm_order_modified_price_button"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
+                android:text="800.0"
                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/order_summary_cash_payment_checkBox"
+                android:text="Cash Payment"/>
 
         </LinearLayout>
 

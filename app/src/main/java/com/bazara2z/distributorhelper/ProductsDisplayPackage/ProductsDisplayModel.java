@@ -1,26 +1,26 @@
 package com.bazara2z.distributorhelper.ProductsDisplayPackage;
 
+import com.bazara2z.distributorhelper.OffersPackage.ProductOffersModel;
+
+import java.util.ArrayList;
+
 /**
  * Created by Maddy on 04-03-2016.
  */
 public class ProductsDisplayModel {
 
     public int id;
+    public int productId;
     public String offerDetails;
     public String productName;
     public String unit;
     public double pricePerUnit;
+    public ArrayList<ProductOffersModel> productOffersModels;
 
     public ProductsDisplayModel(){
 
     }
 
-    public ProductsDisplayModel(int id, String offerDetails, String productName, double pricePerUnit){
-        this.id = id;
-        this.offerDetails = offerDetails;
-        this.productName = productName;
-        this.pricePerUnit = pricePerUnit;
-    }
 
     public int getId(){
         return id;
@@ -30,12 +30,24 @@ public class ProductsDisplayModel {
         this.id = id;
     }
 
-    public String getOfferDetails(){
-        return offerDetails;
+    public int getProductId(){
+        return productId;
     }
 
-    public void setOfferDetails(String offerDetails){
-        this.offerDetails = offerDetails;
+    public void setProductId(int productId){
+        this.productId = productId;
+    }
+
+    public ArrayList<ProductOffersModel> getProductOffers(){
+        return productOffersModels;
+    }
+
+    public void setProductOffers(ArrayList<ProductOffersModel> productOffersModels){
+        this.productOffersModels = productOffersModels;
+    }
+
+    public int getProductOffersCount(){
+        return this.productOffersModels.size();
     }
 
     public String getProductName(){

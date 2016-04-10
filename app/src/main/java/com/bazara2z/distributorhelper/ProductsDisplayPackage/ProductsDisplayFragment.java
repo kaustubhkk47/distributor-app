@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
+import com.bazara2z.distributorhelper.OffersPackage.ProductOffersModel;
 
 public class ProductsDisplayFragment extends ListFragment {
 
@@ -83,13 +84,13 @@ public class ProductsDisplayFragment extends ListFragment {
 
         Context mContext = getActivity().getApplicationContext();
 
-        String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT};
+        String[] columns = {ProductsEntry.COLUMN_PRODUCT_ID ,ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT};
 
         Cursor cursor = mContext.getContentResolver().query(ProductsEntry.DISPLAY_URI, columns, null, null, null);
 
         ProductsDisplayModel productsDisplayModel;
 
-        Log.w(LOG_TAG, "The number of items fetched is " + String.valueOf(cursor.getCount()));
+        Log.w(LOG_TAG, "The number of products fetched is " + String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0){
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -97,11 +98,52 @@ public class ProductsDisplayFragment extends ListFragment {
 
                 productsDisplayModel = new ProductsDisplayModel();
                 productsDisplayModel.setId(i);
+                productsDisplayModel.setProductId(cursor.getInt(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_ID)));
                 productsDisplayModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
                 productsDisplayModel.setPricePerUnit(cursor.getDouble(cursor.getColumnIndex(ProductsEntry.COLUMN_PRICE_PER_UNIT)));
 
+                //---------------------------------------------------------------------------------------------
 
-                //Log.w(LOG_TAG, "i currently is " + i);
+                ArrayList<ProductOffersModel> mProductOffersModelList = new ArrayList<ProductOffersModel>();
+
+                String[] columns1 = {ProductOffersEntry.COLUMN_OFFER_ID, ProductOffersEntry.COLUMN_OFFER_TYPE_NAME,
+                        ProductOffersEntry.COLUMN_OFFER_TYPE,ProductOffersEntry.COLUMN_PRODUCT_ID,
+                        ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY,
+                        ProductOffersEntry.COLUMN_DISCOUNT_PERCENT, ProductOffersEntry.COLUMN_X_COUNT,
+                        ProductOffersEntry.COLUMN_Y_COUNT, ProductOffersEntry.COLUMN_Y_NAME};
+
+                String selection = ProductOffersEntry.COLUMN_PRODUCT_ID + " = " +
+                        cursor.getInt(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_ID));
+
+                Cursor cursor1 = mContext.getContentResolver().query(ProductOffersEntry.CHECK_URI, columns1, selection, null, null);
+
+                ProductOffersModel productOffersModel;
+
+                if (cursor1.getCount() > 0){
+                    for (int j = 0; j < cursor1.getCount(); j = j + 1) {
+                        cursor1.moveToNext();
+
+                        productOffersModel = new ProductOffersModel();
+                        productOffersModel.setId(j);
+                        productOffersModel.setOfferId(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_ID)));
+                        productOffersModel.setOfferDetails(cursor1.getString(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE_NAME)));
+                        productOffersModel.setOfferType(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE)));
+                        productOffersModel.setProductId(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_PRODUCT_ID)));
+                        productOffersModel.setMinimumOrderQuantity(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY)));
+                        productOffersModel.setDiscountPercent(cursor1.getDouble(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_DISCOUNT_PERCENT)));
+                        productOffersModel.setxCount(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_X_COUNT)));
+                        productOffersModel.setyCount(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_Y_COUNT)));
+                        productOffersModel.setyName(cursor1.getString(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_Y_NAME)));
+
+                        mProductOffersModelList.add(productOffersModel);
+                    }
+                }
+
+                cursor1.close();
+
+                //---------------------------------------------------------------------------------------------
+
+                productsDisplayModel.setProductOffers(mProductOffersModelList);
 
                 mProductDisplayModelList.add(productsDisplayModel);
             }

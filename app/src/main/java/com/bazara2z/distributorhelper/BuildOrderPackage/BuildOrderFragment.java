@@ -77,7 +77,7 @@ public class BuildOrderFragment extends ListFragment {
 
         Context mContext = getActivity().getApplicationContext();
 
-        String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT, OffersEntry.COLUMN_OFFER_DETAILS,
+        String[] columns = {ProductsEntry.COLUMN_PRODUCT_NAME, ProductsEntry.COLUMN_PRICE_PER_UNIT, ProductOffersEntry.COLUMN_OFFER_TYPE_NAME,
                 ProductsEntry.TABLE_NAME + "." + ProductsEntry.COLUMN_PRODUCT_ID};
 
         Cursor cursor = mContext.getContentResolver().query(ProductsEntry.DISPLAY_URI, columns, null, null, null);
@@ -94,7 +94,7 @@ public class BuildOrderFragment extends ListFragment {
 
                 buildOrderModel.setId(i);
                 buildOrderModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
-                buildOrderModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(OffersEntry.COLUMN_OFFER_DETAILS)));
+                buildOrderModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE_NAME)));
                 buildOrderModel.setPricePerUnit(cursor.getDouble(cursor.getColumnIndex(ProductsEntry.COLUMN_PRICE_PER_UNIT)));
                 buildOrderModel.setQuantity(0);
                 buildOrderModel.setProductId(cursor.getInt(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_ID)));

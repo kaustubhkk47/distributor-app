@@ -12,6 +12,9 @@ public class OrderSummaryModel {
     public String retailerName;
     public int isNewOrder;
     public int isOrderSynced;
+    public double discountPercent = 0;
+    public int orderOfferId;
+    public int orderOfferApplied;
 
     public int getOrderId(){
         return orderId;
@@ -20,6 +23,23 @@ public class OrderSummaryModel {
     public void setOrderId(int orderId){
         this.orderId = orderId;
     }
+
+    public int getOrderOfferId(){
+        return orderOfferId;
+    }
+
+    public void setOrderOfferId(int orderOfferId){
+        this.orderOfferId = orderOfferId;
+    }
+
+    public int getOrderOfferApplied(){
+        return orderOfferApplied;
+    }
+
+    public void setOrderOfferApplied(int orderOfferApplied){
+        this.orderOfferApplied = orderOfferApplied;
+    }
+
 
     public int getProductCount(){
         return productCount;
@@ -35,6 +55,14 @@ public class OrderSummaryModel {
 
     public void setTotalPrice(double totalPrice){
         this.totalPrice = totalPrice;
+    }
+
+    public double getDiscountPercent(){
+        return discountPercent;
+    }
+
+    public void setDiscountPercent(double discountPercent){
+        this.discountPercent = discountPercent;
     }
 
     public double getModifiedPrice(){

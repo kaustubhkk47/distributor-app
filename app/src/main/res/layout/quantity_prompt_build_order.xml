@@ -8,7 +8,7 @@
     style="@style/Animation.AppCompat.Dialog">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/quantity_prompt_build_order_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter quantity : "

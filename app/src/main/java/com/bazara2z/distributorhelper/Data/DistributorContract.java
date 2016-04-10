@@ -17,7 +17,8 @@ public class DistributorContract {
     public static final String PATH_USER = "user";
     public static final String PATH_RETAILERS = "retailers";
     public static final String PATH_PRODUCTS = "products";
-    public static final String PATH_OFFERS = "offers";
+    public static final String PATH_PRODUCT_OFFERS = "product_offers";
+    public static final String PATH_ORDER_OFFERS = "order_offers";
     public static final String PATH_ORDERS = "orders";
     public static final String PATH_ORDER_ITEMS = "order_items";
     public static final String PATH_TRACKING = "tracking";
@@ -118,6 +119,7 @@ public class DistributorContract {
         public static final String BULK_INSERT = "bulk_insert";
         public static final String PRODUCTS_WITH_QUANTITY = "products_with_uantity";
         public static final String DELETE = "delete";
+        public static final String PRODUCTS_ORDER_SUMMARY = "products_order_summary";
 
         public static final Uri INSERT_URI = CONTENT_URI.buildUpon().appendPath(INSERT).build();
         public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
@@ -125,6 +127,7 @@ public class DistributorContract {
         public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
         public static final Uri PRODUCTS_WITH_QUANTITY_URI = CONTENT_URI.buildUpon().appendPath(PRODUCTS_WITH_QUANTITY).build();
         public static final Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(DELETE).build();
+        public static final Uri PRODUCTS_ORDER_SUMMARY_URI = CONTENT_URI.buildUpon().appendPath(PRODUCTS_ORDER_SUMMARY).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
@@ -143,10 +146,40 @@ public class DistributorContract {
 
     }
 
-    public static final class OffersEntry implements BaseColumns{
+    public static final class OrderOffersEntry implements BaseColumns{
 
         public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_OFFERS).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_ORDER_OFFERS).build();
+
+        public static final String CHECK = "check";
+        public static final String BULK_INSERT = "bulk_insert";
+
+        public static final Uri CHECK_URI = CONTENT_URI.buildUpon().appendPath(CHECK).build();
+        public static final Uri BULK_INSERT_URI = CONTENT_URI.buildUpon().appendPath(BULK_INSERT).build();
+
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCT_OFFERS;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCT_OFFERS;
+
+        public static final String TABLE_NAME = "order_offers";
+
+        public static final String COLUMN_OFFER_ID = "order_offer_id";
+        public static final String COLUMN_OFFER_NAME = "order_offer_name";
+        public static final String COLUMN_DISCOUNT_PERCENT = "discount_percent";
+
+        public static final int ORDER_OFFER_TYPE_CASH_DISCOUNT = 1;
+
+        public static Uri buildOfferUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+    }
+
+    public static final class ProductOffersEntry implements BaseColumns{
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PRODUCT_OFFERS).build();
 
         public static final String INSERT = "insert";
         public static final String CHECK = "check";
@@ -161,14 +194,25 @@ public class DistributorContract {
         public static final Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(DELETE).build();
 
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_OFFERS;
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCT_OFFERS;
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_OFFERS;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCT_OFFERS;
 
-        public static final String TABLE_NAME = "offers";
+        public static final String TABLE_NAME = "product_offers";
 
-        public static final String COLUMN_OFFER_ID = "offer_id";
-        public static final String COLUMN_OFFER_DETAILS = "offer_details";
+        public static final String COLUMN_OFFER_ID = "product_offer_id";
+        public static final String COLUMN_OFFER_TYPE_NAME = "product_offer_type_name";
+        public static final String COLUMN_OFFER_TYPE = "product_offer_type";
+        public static final String COLUMN_PRODUCT_ID = "product_id";
+        public static final String COLUMN_MINIMUM_ORDER_QUANTITY = "product_offer_minimum_order_quantity";
+        public static final String COLUMN_DISCOUNT_PERCENT = "product_offer_discount_percent";
+        public static final String COLUMN_X_COUNT = "product_offer_x_count";
+        public static final String COLUMN_Y_COUNT = "product_offer_y_count";
+        public static final String COLUMN_Y_NAME = "product_offer_y_name";
+
+        public static final int PRODUCT_OFFER_TYPE_VOLUME_DISCOUNT = 1;
+        public static final int PRODUCT_OFFER_TYPE_BUY_X_GET_Y_FREE = 2;
+        public static final int PRODUCT_OFFER_TYPE_BUY_A_GET_B_FREE = 3;
 
         public static Uri buildOfferUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -204,6 +248,8 @@ public class DistributorContract {
         public static final String COLUMN_ORDER_CREATION_TIME = "order_creation_time";
         public static final String COLUMN_ORDER_UPDATION_TIME = "order_updation_time";
         public static final String COLUMN_ORDER_ID = "order_id";
+        public static final String COLUMN_ORDER_OFFER_APPLIED = "order_offer_applied";
+        public static final String COLUMN_ORDER_OFFER_ID = "order_offer_id";
 
         public static Uri buildOrderUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -237,6 +283,10 @@ public class DistributorContract {
         public static final String COLUMN_QUANTITY = "quantity";
         public static final String COLUMN_PRODUCT_ID = "product_id";
         public static final String COLUMN_ORDER_ID = "order_id";
+        public static final String COLUMN_OFFERS_APPLIED = "offers_applied";
+        public static final String COLUMN_TOTAL_PRICE = "total_price";
+        public static final String COLUMN_EDITED_PRICE = "edited_price";
+        public static final String COLUMN_FREE_UNITS = "free_units";
 
     }
 

@@ -56,7 +56,7 @@ public class MyOrdersAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.my_order_list_item_layout, null);
+            convertView = layoutInflater.inflate(R.layout.list_item_layout_my_order, null);
             holder = new ViewHolder();
             holder.retailerName = (TextView) convertView.findViewById(R.id.my_order_retailer_name);
             holder.productCount = (TextView) convertView.findViewById(R.id.my_order_product_count);

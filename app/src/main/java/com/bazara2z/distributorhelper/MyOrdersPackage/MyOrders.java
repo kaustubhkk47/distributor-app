@@ -101,7 +101,8 @@ public class MyOrders extends AppCompatActivity {
                 orderSummaryModel.setTotalPrice(cursor.getDouble(cursor.getColumnIndex(OrdersEntry.COLUMN_TOTAL_PRICE)));
                 orderSummaryModel.setModifiedPrice(cursor.getDouble(cursor.getColumnIndex(OrdersEntry.COLUMN_MODIFIED_PRICE)));
                 orderSummaryModel.setOrderId(cursor.getInt(cursor.getColumnIndex(OrdersEntry._ID)));
-                orderSummaryModel.setIsOrderSynced(cursor.getInt(cursor.getColumnIndex(OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS)));
+                //orderSummaryModel.setIsOrderSynced(cursor.getInt(cursor.getColumnIndex(OrdersEntry.COLUMN_UPLOAD_SYNC_STATUS)));
+                orderSummaryModel.setIsOrderSynced(1);
 
                 orderSummaryModelList.add(orderSummaryModel);
             }

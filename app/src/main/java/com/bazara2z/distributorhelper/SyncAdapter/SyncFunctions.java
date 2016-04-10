@@ -67,9 +67,21 @@ public class SyncFunctions {
     ///OFFER
     public static final String KEY_OFFER_STATUS = "offer_status";
     public static final String KEY_TITLE = "title";
-    public static final String KEY_OFFER_ID = "offerID";
+    public static final String KEY_PRODUCT_OFFER_ID = "productOfferID";
     public static final String KEY_DISTRIBUTOR_ID = "distributorID";
+    public static final String KEY_OFFER_TYPE = "offerType";
+    public static final String KEY_OFFER_TYPE_ID = "offerTypeID";
+    public static final String KEY_OFFER_TYPE_NAME = "offerTypeName";
+    public static final String KEY_OFFER_DESCRIPTION = "description";
+    public static final String KEY_OFFER_MINIMUM_ORDER_QUANTITY = "MOQ";
+    public static final String KEY_OFFER_DISCOUNT_PERCENT = "discount";
+    public static final String KEY_OFFER_X_COUNT = "x";
+    public static final String KEY_OFFER_Y_COUNT = "y";
+    public static final String KEY_Y_NAME = "B";
 
+    public static final String KEY_ORDER_OFFER_ID = "orderOfferID";
+    public static final String KEY_ORDER_OFFER_DISCOUNT = "discount";
+    public static final String KEY_ORDER_OFFER_NAME = "name";
 
     ///ORDERS
     public static final String KEY_ORDERS = "orders";
@@ -355,49 +367,150 @@ public class SyncFunctions {
             return;
         }
 
-        ArrayList<Integer> offerIds = getAllOfferIds();
+        ArrayList<Integer> productOfferIds = getAllProductOfferIds();
+        ArrayList<Integer> orderOfferIds = getAllOrderOfferIds();
 
         JSONObject bodyJSON;
-        JSONArray offers;
+        JSONObject offerJSON;
+        JSONArray productOffers = new JSONArray();
+        JSONArray orderOffers = new JSONArray();
 
         try {
             bodyJSON = new JSONObject(body);
-            offers = bodyJSON.getJSONArray("offers");
+            offerJSON = bodyJSON.getJSONObject("offers");
+            productOffers = offerJSON.getJSONArray("productOffers");
+            orderOffers = offerJSON.getJSONArray("orderOffers");
         }
         catch (JSONException e){
-            return;
+            Log.w(LOG_TAG, e.toString());
         }
 
-        ArrayList<ContentValues> cVVector = new ArrayList<ContentValues>(offers.length());
+        //----------------------------------------------------------------------------------------------------------
 
-        for (int i = 0; i < offers.length(); i = i + 1) {
+        ArrayList<ContentValues> cVVector1 = new ArrayList<ContentValues>(orderOffers.length());
 
-            JSONObject offer;
-
-            try {
-                offer = offers.getJSONObject(i);
-            }
-            catch (JSONException e){
-                return;
-            }
-
-            String mOfferDetails;
-            int mOfferId;
+        for (int i = 0; i < orderOffers.length(); i = i + 1){
+            JSONObject orderOffer = new JSONObject();
 
             try {
-                mOfferDetails = offer.getString(KEY_TITLE);
-                mOfferId = offer.getInt(KEY_OFFER_ID);
+                orderOffer = orderOffers.getJSONObject(i);
             }
             catch (JSONException e){
-                return;
+                Log.w(LOG_TAG, e.toString());
             }
 
-            if(!offerIds.contains(mOfferId)) {
+            int orderOfferId = 0;
+            String orderOfferName = "";
+            double discountPercent = 0.0;
+
+            try {
+                orderOfferId = orderOffer.getInt(KEY_ORDER_OFFER_ID);
+                orderOfferName = orderOffer.getString(KEY_ORDER_OFFER_NAME);
+                discountPercent = orderOffer.getDouble(KEY_ORDER_OFFER_DISCOUNT);
+            }
+            catch (JSONException e){
+                Log.w(LOG_TAG, e.toString());
+            }
+
+            if(!orderOfferIds.contains(orderOfferId)){
+                ContentValues offerValues = new ContentValues();
+
+                offerValues.put(DistributorContract.OrderOffersEntry.COLUMN_OFFER_ID, orderOfferId);
+                offerValues.put(DistributorContract.OrderOffersEntry.COLUMN_OFFER_NAME, orderOfferName);
+                offerValues.put(DistributorContract.OrderOffersEntry.COLUMN_DISCOUNT_PERCENT, discountPercent);
+
+                cVVector1.add(offerValues);
+            }
+
+
+        }
+
+        ContentValues[] cvArray1 = new ContentValues[cVVector1.size()];
+        cVVector1.toArray(cvArray1);
+
+        int count = mContext.getContentResolver().bulkInsert(DistributorContract.OrderOffersEntry.BULK_INSERT_URI, cvArray1);
+
+        Log.w(LOG_TAG, "Inserted " + count + " order offers");
+
+        //----------------------------------------------------------------------------------------------------------
+
+        ArrayList<ContentValues> cVVector = new ArrayList<ContentValues>(productOffers.length());
+
+        for (int i = 0; i < productOffers.length(); i = i + 1) {
+
+            JSONObject productOffer = new JSONObject();
+
+            try {
+                productOffer = productOffers.getJSONObject(i);
+            }
+            catch (JSONException e){
+                Log.w(LOG_TAG, e.toString());
+            }
+
+            int mProductOfferId = 0;
+            int mProductId = 0;
+            JSONObject mOfferType = new JSONObject();
+            int mOfferTypeId = 0;
+            String mOfferTypeName = "";
+            JSONObject mOfferDescription = new JSONObject();
+            int minimumOrderQuantity = 0;
+            double discountPercent = 0.0;
+            int xCount = 0;
+            int yCount = 0;
+            String yName = "";
+
+            try {
+                mProductOfferId = productOffer.getInt(KEY_PRODUCT_OFFER_ID);
+                mProductId = productOffer.getInt(KEY_PRODUCT_ID);
+                mOfferType = productOffer.getJSONObject(KEY_OFFER_TYPE);
+                mOfferTypeId = mOfferType.getInt(KEY_OFFER_TYPE_ID);
+                mOfferTypeName = mOfferType.getString(KEY_OFFER_TYPE_NAME);
+                mOfferDescription = productOffer.getJSONObject(KEY_OFFER_DESCRIPTION);
+
+                switch (mOfferTypeId){
+                    case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_VOLUME_DISCOUNT:
+                        minimumOrderQuantity = mOfferDescription.getInt(KEY_OFFER_MINIMUM_ORDER_QUANTITY);
+                        discountPercent = mOfferDescription.getDouble(KEY_OFFER_DISCOUNT_PERCENT);
+                        break;
+                    case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_BUY_X_GET_Y_FREE:
+                        xCount = mOfferDescription.getInt(KEY_OFFER_X_COUNT);
+                        yCount = mOfferDescription.getInt(KEY_OFFER_Y_COUNT);
+                        break;
+                    case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_BUY_A_GET_B_FREE:
+                        xCount = mOfferDescription.getInt(KEY_OFFER_X_COUNT);
+                        yCount = mOfferDescription.getInt(KEY_OFFER_Y_COUNT);
+                        yName = mOfferDescription.getString(KEY_Y_NAME);
+                        break;
+                }
+            }
+            catch (JSONException e){
+                Log.w(LOG_TAG, e.toString());
+            }
+
+            if(!productOfferIds.contains(mProductOfferId)) {
 
                 ContentValues offerValues = new ContentValues();
 
-                offerValues.put(DistributorContract.OffersEntry.COLUMN_OFFER_ID, mOfferId);
-                offerValues.put(DistributorContract.OffersEntry.COLUMN_OFFER_DETAILS, mOfferDetails);
+                offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_OFFER_ID, mProductOfferId);
+                offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_OFFER_TYPE_NAME, mOfferTypeName);
+                offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_PRODUCT_ID, mProductId);
+                offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_OFFER_TYPE, mOfferTypeId);
+
+                switch (mOfferTypeId){
+                    case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_VOLUME_DISCOUNT:
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY, minimumOrderQuantity);
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_DISCOUNT_PERCENT, discountPercent);
+                        break;
+                    case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_BUY_X_GET_Y_FREE:
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_X_COUNT, xCount);
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_Y_COUNT, yCount);
+                        break;
+                    case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_BUY_A_GET_B_FREE:
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_X_COUNT, xCount);
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_Y_COUNT, yCount);
+                        offerValues.put(DistributorContract.ProductOffersEntry.COLUMN_Y_NAME, yName);
+                        break;
+                }
 
 
                 //Uri insertedUri = mContext.getContentResolver().insert(RetailersEntry.INSERT_URI, retailerValues);
@@ -409,14 +522,14 @@ public class SyncFunctions {
         ContentValues[] cvArray = new ContentValues[cVVector.size()];
         cVVector.toArray(cvArray);
 
-        int count = mContext.getContentResolver().bulkInsert(DistributorContract.OffersEntry.BULK_INSERT_URI, cvArray);
+        count = mContext.getContentResolver().bulkInsert(DistributorContract.ProductOffersEntry.BULK_INSERT_URI, cvArray);
 
-        Log.w(LOG_TAG, "Inserted " + count + " offers");
+        Log.w(LOG_TAG, "Inserted " + count + " product offers");
 
         afterOfferDownload();
     }
 
-    public ArrayList<Integer> getAllOfferIds(){
+    public ArrayList<Integer> getAllProductOfferIds(){
 
         if (mContext == null){
             return null;
@@ -426,16 +539,46 @@ public class SyncFunctions {
 
         int offerId;
 
-        String[] columns = {DistributorContract.OffersEntry.COLUMN_OFFER_ID};
+        String[] columns = {DistributorContract.ProductOffersEntry.COLUMN_OFFER_ID};
 
-        Cursor cursor = mContext.getContentResolver().query(DistributorContract.OffersEntry.CHECK_URI, columns, null, null, null);
+        Cursor cursor = mContext.getContentResolver().query(DistributorContract.ProductOffersEntry.CHECK_URI, columns, null, null, null);
 
 
         if (cursor.getCount() > 0){
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
 
-                offerId = cursor.getInt(cursor.getColumnIndex(DistributorContract.OffersEntry.COLUMN_OFFER_ID));
+                offerId = cursor.getInt(cursor.getColumnIndex(DistributorContract.ProductOffersEntry.COLUMN_OFFER_ID));
+
+                offerIds.add(offerId);
+            }
+        }
+
+        cursor.close();
+
+        return offerIds;
+    }
+
+    public ArrayList<Integer> getAllOrderOfferIds(){
+
+        if (mContext == null){
+            return null;
+        }
+
+        ArrayList<Integer> offerIds = new ArrayList<Integer>();
+
+        int offerId;
+
+        String[] columns = {DistributorContract.OrderOffersEntry.COLUMN_OFFER_ID};
+
+        Cursor cursor = mContext.getContentResolver().query(DistributorContract.OrderOffersEntry.CHECK_URI, columns, null, null, null);
+
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+
+                offerId = cursor.getInt(cursor.getColumnIndex(DistributorContract.OrderOffersEntry.COLUMN_OFFER_ID));
 
                 offerIds.add(offerId);
             }
@@ -455,7 +598,7 @@ public class SyncFunctions {
         String selection = null;
         String[] selectionArgs = null;
 
-        int deletedrows = mContext.getContentResolver().delete(DistributorContract.OffersEntry.DELETE_URI, selection ,selectionArgs);
+        int deletedrows = mContext.getContentResolver().delete(DistributorContract.ProductOffersEntry.DELETE_URI, selection ,selectionArgs);
 
     }
 
@@ -1218,7 +1361,7 @@ public class SyncFunctions {
 
         trackingValues.put(DistributorContract.TrackingEntry.COLUMN_UPLOAD_SYNC_STATUS, 1);
 
-        int editedrows = mContext.getContentResolver().update(DistributorContract.TrackingEntry.UPDATE_URI, trackingValues,selection,selectionArgs);
+        int editedrows = mContext.getContentResolver().update(DistributorContract.TrackingEntry.UPDATE_URI, trackingValues, selection, selectionArgs);
 
         Log.w(LOG_TAG, "Tracking updated");
 

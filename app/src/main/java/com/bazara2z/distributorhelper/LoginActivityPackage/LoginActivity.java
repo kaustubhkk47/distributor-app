@@ -26,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
+import com.bazara2z.distributorhelper.Miscellaneous.Validation;
 import com.bazara2z.distributorhelper.R;
 
 import com.bazara2z.distributorhelper.SyncAdapter.SyncFunctions;
@@ -64,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
     private String mToken = "";
 
     private final String mUserName = "Test User";
+
+    Validation validation = new Validation();
 
 
     @Override
@@ -108,14 +111,14 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !validation.isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid phoneno.
-        if (!isPhoneNoValid(phoneno)) {
+        if (!validation.isPhoneNoValid(phoneno)) {
             mPhoneNoView.setError(getString(R.string.error_invalid_phonenumber));
             focusView = mPhoneNoView;
             cancel = true;
@@ -195,7 +198,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void connectToNetwork() {
 
-
         RequestQueue queue = Volley.newRequestQueue(this);
 
         Log.w(LOG_TAG, this.toString());
@@ -250,15 +252,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.put(syncFunctions.KEY_PASSWORD, mPassword);
                 return params;
             }
-            /*
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                // the POST parameters:
-                headers.put("Content-Type",  "application/x-www-form-urlencoded");
-                return headers;
-            }
-            */
+
         };
 
         queue.add(postRequest);
@@ -275,18 +269,6 @@ public class LoginActivity extends AppCompatActivity {
         showProgress(false);
         mPasswordView.setError(getString(R.string.error_network));
         mPasswordView.requestFocus();
-    }
-
-    private boolean isPhoneNoValid(String phoneno) {
-        if (phoneno.matches("[0-9]+") && phoneno.length() == 10 && phoneno.substring(0, 1).matches("9|8|7")){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isPasswordValid(String password) {
-
-        return true;
     }
 
     public void showProgress(final boolean show) {
@@ -335,10 +317,6 @@ public class LoginActivity extends AppCompatActivity {
         showProgress(false);
 
     }
-
-
-
-
 
 }
 

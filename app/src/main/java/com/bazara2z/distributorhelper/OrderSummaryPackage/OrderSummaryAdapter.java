@@ -51,7 +51,7 @@ public class OrderSummaryAdapter extends BaseAdapter {
         final ViewHolder holder;
 
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.order_summary_list_item_layout, null);
+            convertView = layoutInflater.inflate(R.layout.list_item_layout_order_summary, null);
             holder = new ViewHolder();
             holder.productName = (TextView) convertView.findViewById(R.id.order_summary_product_name);
             holder.quantity = (TextView) convertView.findViewById(R.id.order_summary_total_quantity_listitem);

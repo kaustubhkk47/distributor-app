@@ -25,9 +25,14 @@ import android.view.MenuItem;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
 import com.bazara2z.distributorhelper.OffersPackage.OffersFragment;
+import com.bazara2z.distributorhelper.OffersPackage.ProductOffersModel;
 import com.bazara2z.distributorhelper.OrderSummaryPackage.OrderSummaryFragment;
 import com.bazara2z.distributorhelper.OrderSummaryPackage.OrderSummaryModel;
 import com.bazara2z.distributorhelper.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class BuildOrder extends AppCompatActivity implements ActionBar.TabListener, OffersFragment.OnFragmentInteractionListener,
         BuildOrderFragment.OnFragmentInteractionListener, OrderSummaryFragment.OnFragmentInteractionListener {
@@ -237,6 +242,76 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
                 buildOrderModel.setId(i);
                 buildOrderModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
 
+                //---------------------------------------------------------------------------------------------
+
+                ArrayList<ProductOffersModel> mProductOffersModelList = new ArrayList<ProductOffersModel>();
+
+                String[] columns1 = {ProductOffersEntry.COLUMN_OFFER_ID, ProductOffersEntry.COLUMN_OFFER_TYPE_NAME,
+                        ProductOffersEntry.COLUMN_OFFER_TYPE,ProductOffersEntry.COLUMN_PRODUCT_ID,
+                        ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY,
+                        ProductOffersEntry.COLUMN_DISCOUNT_PERCENT, ProductOffersEntry.COLUMN_X_COUNT,
+                        ProductOffersEntry.COLUMN_Y_COUNT, ProductOffersEntry.COLUMN_Y_NAME};
+
+                String selection = ProductOffersEntry.COLUMN_PRODUCT_ID + " = " +
+                        cursor.getInt(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_ID));
+
+                Cursor cursor1 = mContext.getContentResolver().query(ProductOffersEntry.CHECK_URI, columns1, selection, null, null);
+
+                ProductOffersModel productOffersModel;
+
+                ArrayList<Integer> offerIds = new ArrayList<>();
+
+                if (newOrder == 0){
+                    String offersAppliedString = cursor.getString(cursor.getColumnIndex(OrderItemsEntry.COLUMN_OFFERS_APPLIED));
+                    if (offersAppliedString == null){
+                        Log.w(LOG_TAG, "Null it is");
+                    }
+                    //Log.w(LOG_TAG, offersAppliedString);
+                    try {
+                        JSONObject offersAppliedJSON = new JSONObject(offersAppliedString);
+                        JSONArray offersAppliedArray = offersAppliedJSON.getJSONArray(OrderItemsEntry.COLUMN_OFFERS_APPLIED);
+                        for (int j = 0; j < offersAppliedArray.length(); j = j + 1){
+                            offerIds.add(offersAppliedArray.getInt(j));
+                        }
+                    }
+                    catch (JSONException e){
+                        Log.w(LOG_TAG, e.toString());
+                    }
+
+                }
+
+                if (cursor1.getCount() > 0){
+                    for (int j = 0; j < cursor1.getCount(); j = j + 1) {
+                        cursor1.moveToNext();
+
+                        productOffersModel = new ProductOffersModel();
+                        productOffersModel.setId(j);
+                        productOffersModel.setOfferId(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_ID)));
+                        productOffersModel.setOfferDetails(cursor1.getString(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE_NAME)));
+                        productOffersModel.setOfferType(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE)));
+                        productOffersModel.setProductId(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_PRODUCT_ID)));
+                        //productOffersModel.setProductName(cursor1.getString(cursor1.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
+                        productOffersModel.setMinimumOrderQuantity(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY)));
+                        productOffersModel.setDiscountPercent(cursor1.getDouble(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_DISCOUNT_PERCENT)));
+                        productOffersModel.setxCount(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_X_COUNT)));
+                        productOffersModel.setyCount(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_Y_COUNT)));
+                        productOffersModel.setyName(cursor1.getString(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_Y_NAME)));
+                        productOffersModel.setOfferApplied(0);
+
+                        if (newOrder == 0){
+                            if (offerIds.contains(cursor1.getInt(cursor1.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_ID)))){
+                                productOffersModel.setOfferApplied(1);
+                            }
+                        }
+
+                        mProductOffersModelList.add(productOffersModel);
+                    }
+                }
+
+                cursor1.close();
+
+                //---------------------------------------------------------------------------------------------
+
                 buildOrderModel.setPricePerUnit(pricePerUnit);
                 if (newOrder == 1) {
                     buildOrderModel.setQuantity(0);
@@ -254,6 +329,8 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
                     }
                 }
                 buildOrderModel.setProductId(cursor.getInt(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_ID)));
+                buildOrderModel.setProductOffers(mProductOffersModelList);
+
                 mBuildOrderModelList.add(buildOrderModel);
             }
         }
@@ -274,11 +351,53 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
         orderSummaryModel.setTotalPrice(0.0);
         orderSummaryModel.setConfirmedStatus(0);
         orderSummaryModel.setIsNewOrder(newOrder);
+        orderSummaryModel.setOrderOfferApplied(0);
+        orderSummaryModel.setDiscountPercent(0.0);
+
+        if (newOrder == 0){
+            String[] columns = {OrdersEntry.COLUMN_ORDER_OFFER_APPLIED, OrdersEntry.COLUMN_ORDER_OFFER_ID};
+            String selection = OrdersEntry._ID +" = " + orderId;
+
+            Cursor cursor = getApplicationContext().getContentResolver().query(OrdersEntry.CHECK_URI, columns, selection, null, null);
+
+            int orderOfferApplied = 0;
+            int orderOfferId = 0;
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToNext();
+
+                orderOfferApplied = cursor.getInt(cursor.getColumnIndex(OrdersEntry.COLUMN_ORDER_OFFER_APPLIED));
+                orderOfferId = cursor.getInt(cursor.getColumnIndex(OrdersEntry.COLUMN_ORDER_OFFER_APPLIED));
+
+            }
+            cursor.close();
+
+            if (orderOfferApplied == 1){
+                String[] columns1 = {OrderOffersEntry.COLUMN_DISCOUNT_PERCENT};
+                String selection1 = OrderOffersEntry.COLUMN_OFFER_ID + " = " + orderOfferId;
+
+                Cursor cursor1 = getApplicationContext().getContentResolver().query(OrderOffersEntry.CHECK_URI, columns1, selection1, null, null);
+
+                double discountPercent = 0.0;
+
+                if (cursor1.getCount() > 0) {
+                    cursor1.moveToNext();
+
+                    discountPercent = cursor1.getDouble(cursor1.getColumnIndex(OrderOffersEntry.COLUMN_DISCOUNT_PERCENT));
+
+                }
+
+                orderSummaryModel.setOrderOfferApplied(1);
+                orderSummaryModel.setDiscountPercent(discountPercent);
+                orderSummaryModel.setOrderOfferId(orderOfferId);
+            }
+        }
     }
 
     public void refreshOrderSummaryModel(){
         int productCount = 0;
         double totalPrice = 0.0;
+        double editedPrice = 0.0;
 
         int listSize = buildOrderModelList.size();
 
@@ -291,18 +410,19 @@ public class BuildOrder extends AppCompatActivity implements ActionBar.TabListen
             if(buildOrderModel.getQuantity() > 0){
                 productCount = productCount + 1;
                 totalPrice = totalPrice + buildOrderModel.getTotalPrice();
+                editedPrice = editedPrice + buildOrderModel.getEditedPrice();
                 orderSummaryModelList.add(buildOrderModel);
             }
         }
 
+        double discountPercent = orderSummaryModel.getDiscountPercent()/100;
+
+        double discountedTotalPrice = totalPrice*(1-discountPercent);
+        double discountedEditedPrice = editedPrice*(1-discountPercent);
+
         orderSummaryModel.setProductCount(productCount);
-        orderSummaryModel.setTotalPrice(totalPrice);
-        orderSummaryModel.setModifiedPrice(totalPrice);
-        /*
-        Log.w(LOG_TAG, "Product count refreshed to " + productCount);
-        Log.w(LOG_TAG, "Total price refreshed to " + totalPrice);
-        */
-        //Log.w(LOG_TAG, "Size of OrderSummaryModelList is " + orderSummaryModelList.size());
+        orderSummaryModel.setTotalPrice(discountedEditedPrice);
+        orderSummaryModel.setModifiedPrice(discountedEditedPrice);
     }
 
     @Override

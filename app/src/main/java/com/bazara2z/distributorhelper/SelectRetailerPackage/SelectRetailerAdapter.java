@@ -51,7 +51,7 @@ public class SelectRetailerAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.select_retailer_list_item_layout, null);
+            convertView = layoutInflater.inflate(R.layout.list_item_layout_select_retailer, null);
             holder = new ViewHolder();
             holder.retailerName = (TextView) convertView.findViewById(R.id.select_retailer_name);
             holder.phoneNumber = (TextView) convertView.findViewById(R.id.select_retailer_phone_number);

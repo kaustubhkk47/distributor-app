@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:id="@+id/build_order_product_name"
+            android:text="Product Name"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             />
@@ -57,6 +58,38 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/build_order_offers_layout"
+        android:visibility="gone"
+        >
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            style="@style/custom_button"
+            android:id="@+id/build_order_offers_button"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Offers"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/build_order_offers_applied_status"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:text="Offers Applied"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -105,6 +138,60 @@
             android:id="@+id/build_order_subtract_button"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical|center_horizontal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Total price :  "
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            android:layout_marginLeft="45dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:id="@+id/build_order_list_total_price_text_view"
+            android:layout_marginTop="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Edited price :  "
+            android:textColor="@color/secondary_text"
+            android:layout_marginLeft="45dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            style="@style/custom_button"
+            android:id="@+id/build_order_list_modified_price_button"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            />
 
     </LinearLayout>
 

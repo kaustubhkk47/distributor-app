@@ -94,7 +94,7 @@ public class SelectRetailer extends AppCompatActivity implements
 
                 clickedRetailerId = selectRetailerModel.getRetailerId();
 
-                checkNewOrder();
+                //checkNewOrder();
 
                 getLocation();
 

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_offers_product_name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            android:text="Product Name"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Offer Details "
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            android:id="@+id/product_offers_offer_details"
+            />
+
+    </LinearLayout>
+
+    <!--
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/product_offers_offer_type_1_layout"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Buy "
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="10"
+            android:layout_marginTop="5dp"
+            android:id="@+id/product_offers_offer_type_1_minimum_order_quantity"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" units to get "
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="20"
+            android:layout_marginTop="5dp"
+            android:id="@+id/product_offers_offer_type_1_discount_percent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" % discount"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/product_offers_offer_type_2_layout"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Buy "
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="5"
+            android:layout_marginTop="5dp"
+
+            android:id="@+id/product_offers_offer_type_2_x_count"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" units to get "
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="1"
+            android:layout_marginTop="5dp"
+            android:id="@+id/product_offers_offer_type_2_y_count"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" unit free"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/product_offers_offer_type_3_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Buy "
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="5"
+            android:layout_marginTop="5dp"
+
+            android:id="@+id/product_offers_offer_type_3_x_count"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" units to get "
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="1"
+            android:layout_marginTop="5dp"
+            android:id="@+id/product_offers_offer_type_3_y_count"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" units of "
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text="Product B"
+            android:layout_marginTop="5dp"
+            android:id="@+id/product_offers_offer_type_3_y_name"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:text=" free"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            />
+
+    </LinearLayout>
+
+    -->
+
+
+</LinearLayout>

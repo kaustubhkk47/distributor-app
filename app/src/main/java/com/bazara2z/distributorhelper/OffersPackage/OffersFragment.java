@@ -30,19 +30,19 @@ public class OffersFragment extends ListFragment {
     public OffersFragment() {
     }
 
-    List<OffersModel> offersModelList;
-    OffersAdapter offersAdapter;
+    List<ProductOffersModel> productOffersModelList;
+    ProductOffersAdapter productOffersAdapter;
     ListView mListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        offersModelList = getAllOffers();
+        productOffersModelList = getAllProductOffers();
 
-        offersAdapter = new OffersAdapter(getActivity(), offersModelList);
+        productOffersAdapter = new ProductOffersAdapter(getActivity(), productOffersModelList);
 
-        this.setListAdapter(offersAdapter);
+        this.setListAdapter(productOffersAdapter);
 
     }
     /*
@@ -82,16 +82,20 @@ public class OffersFragment extends ListFragment {
         void onFragmentInteraction(String id);
     }
 
-    public List<OffersModel> getAllOffers(){
-        ArrayList<OffersModel> mOffersModelList = new ArrayList<OffersModel>();
+    public List<ProductOffersModel> getAllProductOffers(){
+        ArrayList<ProductOffersModel> mProductOffersModelList = new ArrayList<ProductOffersModel>();
 
         Context mContext = getActivity().getApplicationContext();
 
-        String[] columns = {OffersEntry.COLUMN_OFFER_DETAILS};
+        String[] columns = {ProductOffersEntry.COLUMN_OFFER_ID, ProductOffersEntry.COLUMN_OFFER_TYPE_NAME,
+                ProductOffersEntry.COLUMN_OFFER_TYPE,ProductOffersEntry.TABLE_NAME + "." + ProductOffersEntry.COLUMN_PRODUCT_ID,
+                ProductsEntry.COLUMN_PRODUCT_NAME, ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY,
+                ProductOffersEntry.COLUMN_DISCOUNT_PERCENT, ProductOffersEntry.COLUMN_X_COUNT,
+                ProductOffersEntry.COLUMN_Y_COUNT, ProductOffersEntry.COLUMN_Y_NAME};
 
-        Cursor cursor = mContext.getContentResolver().query(OffersEntry.CHECK_URI, columns, null, null, null);
+        Cursor cursor = mContext.getContentResolver().query(ProductOffersEntry.VIEW_WITH_PRODUCTS_URI, columns, null, null, null);
 
-        OffersModel offersModel;
+        ProductOffersModel productOffersModel;
 
         //Log.w(LOG_TAG, "The number of items fetched is " + String.valueOf(cursor.getCount()));
 
@@ -99,21 +103,28 @@ public class OffersFragment extends ListFragment {
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
 
-                offersModel = new OffersModel();
-                offersModel.setId(i);
-                offersModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(OffersEntry.COLUMN_OFFER_DETAILS)));
+                productOffersModel = new ProductOffersModel();
+                productOffersModel.setId(i);
+                productOffersModel.setOfferId(cursor.getInt(cursor.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_ID)));
+                productOffersModel.setOfferDetails(cursor.getString(cursor.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE_NAME)));
+                productOffersModel.setOfferType(cursor.getInt(cursor.getColumnIndex(ProductOffersEntry.COLUMN_OFFER_TYPE)));
+                productOffersModel.setProductId(cursor.getInt(cursor.getColumnIndex(ProductOffersEntry.COLUMN_PRODUCT_ID)));
+                productOffersModel.setProductName(cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_PRODUCT_NAME)));
+                productOffersModel.setMinimumOrderQuantity(cursor.getInt(cursor.getColumnIndex(ProductOffersEntry.COLUMN_MINIMUM_ORDER_QUANTITY)));
+                productOffersModel.setDiscountPercent(cursor.getDouble(cursor.getColumnIndex(ProductOffersEntry.COLUMN_DISCOUNT_PERCENT)));
+                productOffersModel.setxCount(cursor.getInt(cursor.getColumnIndex(ProductOffersEntry.COLUMN_X_COUNT)));
+                productOffersModel.setyCount(cursor.getInt(cursor.getColumnIndex(ProductOffersEntry.COLUMN_Y_COUNT)));
+                productOffersModel.setyName(cursor.getString(cursor.getColumnIndex(ProductOffersEntry.COLUMN_Y_NAME)));
 
-                //Log.w(LOG_TAG, "i currently is " + i);
-
-                mOffersModelList.add(offersModel);
+                mProductOffersModelList.add(productOffersModel);
             }
         }
 
         cursor.close();
 
-        //Log.w(LOG_TAG, "The size of the list is " + mOffersModelList.size());
+        //Log.w(LOG_TAG, "The size of the list is " + mProductOffersModelList.size());
 
-        return mOffersModelList;
+        return mProductOffersModelList;
     }
 
 }
