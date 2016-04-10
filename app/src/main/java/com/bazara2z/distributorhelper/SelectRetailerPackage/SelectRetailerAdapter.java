@@ -24,7 +24,6 @@ public class SelectRetailerAdapter extends BaseAdapter {
     private List<SelectRetailerModel> listData;
 
     public SelectRetailerAdapter(Context context, List<SelectRetailerModel> listData){
-
         this.context = context;
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);

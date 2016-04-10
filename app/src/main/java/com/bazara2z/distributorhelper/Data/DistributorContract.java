@@ -117,7 +117,7 @@ public class DistributorContract {
         public static final String CHECK = "check";
         public static final String DISPLAY = "display";
         public static final String BULK_INSERT = "bulk_insert";
-        public static final String PRODUCTS_WITH_QUANTITY = "products_with_uantity";
+        public static final String PRODUCTS_WITH_QUANTITY = "products_with_quantity";
         public static final String DELETE = "delete";
         public static final String PRODUCTS_ORDER_SUMMARY = "products_order_summary";
 
