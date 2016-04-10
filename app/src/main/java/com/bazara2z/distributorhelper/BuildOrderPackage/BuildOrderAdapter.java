@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,8 +105,10 @@ public class BuildOrderAdapter extends BaseAdapter {
                     final View view = factory.inflate(R.layout.dialog_box_build_order_offers, null);
                     final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                     alertDialog.setView(view);
-                    BuildOrderOffersDialogAdapter buildOrderOffersDialogAdapter =
-                            new BuildOrderOffersDialogAdapter(context, listData.get(position).getProductOffers());
+                    BuildOrderOffersDialogAdapter buildOrderOffersDialogAdapter = new BuildOrderOffersDialogAdapter(context, listData.get(position).getProductOffers());
+                    ListView listView = (ListView) view.findViewById(R.id.dialog_box_build_order_offers_list_view);
+
+                    listView.setAdapter(buildOrderOffersDialogAdapter);
 
                     view.findViewById(R.id.dialog_box_build_order_offers_ok_button).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -298,8 +301,11 @@ public class BuildOrderAdapter extends BaseAdapter {
                         if (productOffersModel.getxCount() <= buildOrderModel.getQuantity()) {
                             holder.offerStatus.setVisibility(View.VISIBLE);
                             holder.offerStatus.setText(productOffersModel.offerAppliedText(buildOrderModel.getQuantity()));
+                            listData.get(position).setFreeUnits(buildOrderModel.getQuantity());
+
 
                         } else {
+                            listData.get(position).setFreeUnits(0);
                             listData.get(position).getProductOffers().get(i).setOfferApplied(0);
                             holder.offerStatus.setVisibility(View.GONE);
                             Toast.makeText(context, "Add at least " + productOffersModel.getxCount()
@@ -315,8 +321,10 @@ public class BuildOrderAdapter extends BaseAdapter {
                         if (productOffersModel.getxCount() <= buildOrderModel.getQuantity()) {
                             holder.offerStatus.setVisibility(View.VISIBLE);
                             holder.offerStatus.setText(productOffersModel.offerAppliedText(buildOrderModel.getQuantity()));
+                            listData.get(position).setFreeUnits(buildOrderModel.getQuantity());
 
                         } else {
+                            listData.get(position).setFreeUnits(0);
                             listData.get(position).getProductOffers().get(i).setOfferApplied(0);
                             holder.offerStatus.setVisibility(View.GONE);
                             Toast.makeText(context, "Add at least " + productOffersModel.getxCount()
@@ -333,6 +341,7 @@ public class BuildOrderAdapter extends BaseAdapter {
         }
 
         if (offerApplied == 0) {
+            listData.get(position).setFreeUnits(0);
             holder.offerStatus.setVisibility(View.GONE);
             listData.get(position).setDiscountPercent(0.0);
         }

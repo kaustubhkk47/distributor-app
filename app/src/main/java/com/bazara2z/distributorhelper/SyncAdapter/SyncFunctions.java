@@ -90,7 +90,9 @@ public class SyncFunctions {
     public static final String KEY_EDITED_PRICE = "editedPrice";
     public static final String KEY_ORDER_PRODUCTS = "products";
     public static final String KEY_QUANTITY = "quantity";
-
+    public static final String KEY_ORDER_OFFER_IDS = "orderOffer";
+    public static final String KEY_PRODUCT_OFFERS = "productOffer";
+    public static final String KEY_FREE_UNITS = "freeQuantity";
 
     ///TRACKING
     public static final String KEY_TRACKING = "latlngs";
@@ -1029,13 +1031,19 @@ public class SyncFunctions {
         int retailerId;
         int productId;
         int quantity;
+        int orderOfferApplied;
+        int orderOfferId;
+        String orderOffersString;
+        String productOffersString;
+        int freeUnits;
 
         for (int i = 0; i< orderCount; i++){
 
             JSONObject orderData = new JSONObject();
 
             String[] columns = {DistributorContract.RetailersEntry.TABLE_NAME + "." + DistributorContract.RetailersEntry.COLUMN_RETAILER_ID, DistributorContract.OrdersEntry.COLUMN_PRODUCT_COUNT,
-                    DistributorContract.OrdersEntry.COLUMN_TOTAL_PRICE, DistributorContract.OrdersEntry.COLUMN_MODIFIED_PRICE};
+                    DistributorContract.OrdersEntry.COLUMN_TOTAL_PRICE, DistributorContract.OrdersEntry.COLUMN_MODIFIED_PRICE,
+                    DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_ID, DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_ID};
 
             String selection = DistributorContract.OrdersEntry.TABLE_NAME + "." + DistributorContract.OrdersEntry._ID + " = " + orderIds.get(i).toString() ;
 
@@ -1049,8 +1057,17 @@ public class SyncFunctions {
                 productCount = cursor.getInt(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_PRODUCT_COUNT));
                 totalPrice = cursor.getDouble(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_TOTAL_PRICE));
                 modifiedPrice = cursor.getDouble(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_MODIFIED_PRICE));
+                orderOfferApplied = cursor.getInt(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_APPLIED));
+                if (orderOfferApplied == 1){
+                    orderOffersString = "[]";
+                }
+                else {
+                    orderOfferId = cursor.getInt(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_ID));
+                    orderOffersString = "[" + orderOfferId + "]";
+                }
 
-                String[] columns1 = {DistributorContract.OrderItemsEntry.COLUMN_PRODUCT_ID, DistributorContract.OrderItemsEntry.COLUMN_QUANTITY};
+                String[] columns1 = {DistributorContract.OrderItemsEntry.COLUMN_PRODUCT_ID, DistributorContract.OrderItemsEntry.COLUMN_QUANTITY,
+                        DistributorContract.OrderItemsEntry.COLUMN_OFFERS_APPLIED, DistributorContract.OrderItemsEntry.COLUMN_FREE_UNITS};
 
                 String selection1 = DistributorContract.OrderItemsEntry.COLUMN_ORDER_ID + " = " + orderIds.get(i).toString();
 
@@ -1064,11 +1081,16 @@ public class SyncFunctions {
 
                         productId = cursor1.getInt(cursor1.getColumnIndex(DistributorContract.OrderItemsEntry.COLUMN_PRODUCT_ID));
                         quantity = cursor1.getInt(cursor1.getColumnIndex(DistributorContract.OrderItemsEntry.COLUMN_QUANTITY));
+                        productOffersString = cursor1.getString(cursor1.getColumnIndex(DistributorContract.OrderItemsEntry.COLUMN_OFFERS_APPLIED));
+                        freeUnits = cursor1.getInt(cursor1.getColumnIndex(DistributorContract.OrderItemsEntry.COLUMN_FREE_UNITS));
 
                         JSONObject orderItemsData = new JSONObject();
                         try {
                             orderItemsData.put(KEY_PRODUCT_ID, productId);
                             orderItemsData.put(KEY_QUANTITY, quantity);
+                            orderItemsData.put(KEY_PRODUCT_OFFERS, productOffersString);
+                            orderItemsData.put(KEY_FREE_UNITS, freeUnits);
+
                         } catch (JSONException e) {
                             Log.w(LOG_TAG, e.toString());
                         }
@@ -1088,6 +1110,7 @@ public class SyncFunctions {
                     orderData.put(KEY_EDITED_PRICE, modifiedPrice);
                     orderData.put(KEY_RETAILER_ID, retailerId);
                     orderData.put(KEY_ORDER_PRODUCTS, orderItems);
+                    orderData.put(KEY_ORDER_OFFER_IDS, orderOffersString);
                 } catch (JSONException e) {
                     Log.w(LOG_TAG, e.toString());
                 }

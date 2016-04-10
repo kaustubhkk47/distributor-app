@@ -156,6 +156,32 @@ public class ProductOffersModel {
 
     }
 
+    public int getFreeUnits(int count){
+
+        switch (getOfferType())
+        {
+            default:
+                return 0;
+            case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_VOLUME_DISCOUNT:
+
+                return 0;
+
+            case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_BUY_X_GET_Y_FREE:
+
+                count /= this.xCount;
+                int i = this.yCount;
+                return count * i ;
+
+            case DistributorContract.ProductOffersEntry.PRODUCT_OFFER_TYPE_BUY_A_GET_B_FREE:
+
+                count /= this.xCount;
+                i = this.yCount;
+                return count * i;
+
+        }
+
+    }
+
     public String getOfferDetailsString()
     {
         switch (getOfferType())

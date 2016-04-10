@@ -43,12 +43,6 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
 
-        <provider
-            android:name=".Data.DistributorProvider"
-            android:authorities="@string/content_authority"
-            android:exported="false"
-            android:syncable="true" />
-
         <activity
             android:name=".MainActivityPackage.MainActivity"
             android:label="@string/title_activity_main"

@@ -346,6 +346,7 @@ public class OrderSummaryFragment extends Fragment {
                 orderItemValues.put(OrderItemsEntry.COLUMN_ORDER_ID, orderId);
                 orderItemValues.put(OrderItemsEntry.COLUMN_TOTAL_PRICE, buildOrderModel.getTotalPrice());
                 orderItemValues.put(OrderItemsEntry.COLUMN_EDITED_PRICE, buildOrderModel.getEditedPrice());
+                orderItemValues.put(OrderItemsEntry.COLUMN_FREE_UNITS, buildOrderModel.getFreeUnits());
 
                 ArrayList<Integer> arrayList = new ArrayList<>();
 
