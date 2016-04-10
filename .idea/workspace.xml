@@ -7,12 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84f0eb72-2173-466a-b23d-2d89d6d808cf" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/MyOrdersPackage/ViewOrderSummary.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorContract.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailerAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailerAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item_layout_my_order.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_layout_my_order.xml" />
     </list>
     <ignored path="DistributorHelper.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,7 +37,43 @@
     <favorites_list name="DistributorHelper" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="SyncFunctions.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="6.058923">
+              <caret line="1350" column="0" selection-start-line="1350" selection-start-column="0" selection-end-line="1350" selection-end-column="0" />
+              <folding>
+                <element signature="method#getRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#fillRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getAllRetailerIds#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#deleteRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getOfferData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#fillOfferData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getAllProductOfferIds#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getAllOrderOfferIds#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#deleteOfferData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getProductData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#fillProductData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getAllProductIds#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#deleteProductData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#accessTokenUrl#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getUnsyncedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#sendRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#updateRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getUnsyncedOrders#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getUnsyncedTracking#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#sendTrackingData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#updateTrackingData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#getEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#sendEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+                <element signature="method#updateEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1822,14 +1856,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_layout_order_summary.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OffersPackage/ProductOffersModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorDBHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorContract.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SelectRetailerPackage/SelectRetailerAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorProvider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_layout_my_order.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java" />
       </list>
     </option>
   </component>
@@ -1935,26 +1970,8 @@
               <option name="myItemId" value="distributorhelper" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="DistributorHelper" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="distributorhelper" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="OrderSummaryPackage" />
+              <option name="myItemId" value="SyncAdapter" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1974,54 +1991,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="distributorhelper" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyOrdersPackage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DistributorHelper" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="distributorhelper" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DistributorHelper" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="distributorhelper" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BuildOrderPackage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2300,7 +2269,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="780" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2321,7 +2290,7 @@
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24355084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24355084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2334,6 +2303,39 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24355084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32736155" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -2408,29 +2410,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_order_summary.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_products_and_offers.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_layout_my_order.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -2551,38 +2531,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.277778">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderOffersDialogAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2003367">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/LoginActivityPackage/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.0420876">
@@ -2628,29 +2576,8 @@
         <state vertical-scroll-proportion="-3.23569">
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.6952863">
-          <caret line="264" column="63" selection-start-line="264" selection-start-column="63" selection-end-line="264" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#BuildOrderAdapter#1;class#BuildOrderAdapter#0" expanded="false" />
-            <element signature="method#refreshOffers#0;class#BuildOrderAdapter#0" expanded="false" />
-            <element signature="class#ViewHolder#0;class#BuildOrderAdapter#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22895622">
-          <caret line="125" column="77" selection-start-line="125" selection-start-column="77" selection-end-line="125" selection-end-column="77" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2749,14 +2676,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.993265">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/DistributorSyncAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2003367">
@@ -2813,28 +2732,151 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.604377">
-          <caret line="100" column="54" selection-start-line="100" selection-start-column="54" selection-end-line="100" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1705#1722#0" expanded="true" />
-            <element signature="e#10501#10516#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorProvider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="6.296296">
           <caret line="492" column="61" selection-start-line="492" selection-start-column="61" selection-end-line="492" selection-end-column="61" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="method#query#0;class#DistributorProvider#0" expanded="false" />
             <element signature="method#insert#0;class#DistributorProvider#0" expanded="false" />
             <element signature="method#update#0;class#DistributorProvider#0" expanded="false" />
             <element signature="method#delete#0;class#DistributorProvider#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderOffersDialogAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2003367">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028619528">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028619528">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_layout_my_order.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5992579">
+          <caret line="148" column="36" selection-start-line="148" selection-start-column="36" selection-end-line="148" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/Data/DistributorContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="167" column="35" selection-start-line="167" selection-start-column="35" selection-end-line="167" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrderAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33274338">
+          <caret line="91" column="55" selection-start-line="91" selection-start-column="48" selection-end-line="91" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#isNumberValid#0;class#BuildOrderAdapter#0" expanded="false" />
+            <element signature="method#refreshOffers#0;class#BuildOrderAdapter#0" expanded="false" />
+            <element signature="method#refreshPrices#0;class#BuildOrderAdapter#0" expanded="false" />
+            <element signature="class#ViewHolder#0;class#BuildOrderAdapter#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_order_summary.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52690166">
+          <caret line="101" column="68" selection-start-line="101" selection-start-column="33" selection-end-line="101" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/BuildOrderPackage/BuildOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.103448">
+          <caret line="425" column="5" selection-start-line="396" selection-start-column="4" selection-end-line="425" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/OrderSummaryPackage/OrderSummaryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48653197">
+          <caret line="65" column="11" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#newInstance#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="e#1966#1983#0" expanded="true" />
+            <element signature="method#OrderSummaryFragment#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#OrderSummaryFragment#1;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onCreate#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onCreateView#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onButtonPressed#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#refreshViews#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onAttach#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#onDetach#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="class#OnFragmentInteractionListener#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#isNumberValid#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="e#12996#13011#0" expanded="true" />
+            <element signature="method#parseIdFromUri#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#showAlertDialog#0;class#OrderSummaryFragment#0" expanded="false" />
+            <element signature="method#refreshOrderSummaryModel#0;class#OrderSummaryFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/bazara2z/distributorhelper/SyncAdapter/SyncFunctions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.058923">
+          <caret line="1350" column="0" selection-start-line="1350" selection-start-column="0" selection-end-line="1350" selection-end-column="0" />
+          <folding>
+            <element signature="method#getRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#fillRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getAllRetailerIds#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#deleteRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getOfferData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#fillOfferData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getAllProductOfferIds#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getAllOrderOfferIds#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#deleteOfferData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getProductData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#fillProductData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getAllProductIds#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#deleteProductData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#accessTokenUrl#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getUnsyncedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#sendRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#updateRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getUnsyncedOrders#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getUnsyncedTracking#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#sendTrackingData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#updateTrackingData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#getEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#sendEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
+            <element signature="method#updateEditedRetailerData#0;class#SyncFunctions#0" expanded="false" />
           </folding>
         </state>
       </provider>

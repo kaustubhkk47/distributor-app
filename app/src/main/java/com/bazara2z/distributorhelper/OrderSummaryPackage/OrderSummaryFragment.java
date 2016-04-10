@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +28,10 @@ import java.util.List;
 import java.util.Vector;
 
 import com.bazara2z.distributorhelper.BuildOrderPackage.BuildOrderModel;
+import com.bazara2z.distributorhelper.Data.DistributorContract;
 import com.bazara2z.distributorhelper.Data.DistributorContract.*;
 import com.bazara2z.distributorhelper.MainActivityPackage.MainActivity;
+import com.bazara2z.distributorhelper.OffersPackage.ProductOffersModel;
 import com.bazara2z.distributorhelper.R;
 import com.bazara2z.distributorhelper.SyncAdapter.SyncFunctions;
 
@@ -47,6 +52,7 @@ public class OrderSummaryFragment extends Fragment {
     OrderSummaryModel orderSummaryModel;
     Context context;
     Context mContext;
+    CheckBox checkBox;
 
     private SyncFunctions syncFunctions;
 
@@ -88,6 +94,44 @@ public class OrderSummaryFragment extends Fragment {
 
         modifiedPrice = (Button) rootView.findViewById(R.id.confirm_order_modified_price_button);
 
+        checkBox = (CheckBox)  rootView.findViewById(R.id.order_summary_cash_payment_checkBox);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    orderSummaryModel.setOrderOfferApplied(1);
+                    orderSummaryModel.setOrderOfferId(1);
+
+                    String [] columns = {OrderOffersEntry.COLUMN_DISCOUNT_PERCENT};
+
+                    String selection = OrderOffersEntry.COLUMN_OFFER_ID + " = 1";
+
+                    Cursor cursor = mContext.getContentResolver().query(DistributorContract.OrderOffersEntry.CHECK_URI, columns, selection, null, null);
+
+                    double discountPercent = 0.0;
+
+                    if (cursor.getCount() > 0){
+                        cursor.moveToNext();
+                        discountPercent = cursor.getDouble(cursor.getColumnIndex(OrderOffersEntry.COLUMN_DISCOUNT_PERCENT));
+                    }
+
+                    orderSummaryModel.setDiscountPercent(discountPercent);
+                    String checkboxText = "Cash Payment : " + String.format("%.1f",discountPercent) + " % discount applied";
+                    checkBox.setText(checkboxText);
+
+                }
+                else {
+                    orderSummaryModel.setDiscountPercent(0.0);
+                    orderSummaryModel.setOrderOfferApplied(0);
+                    checkBox.setText("Cash Payment");
+
+                }
+                refreshOrderSummaryModel();
+
+            }
+        });
+
         //modifiedPrice.setText(String.valueOf(orderSummaryModel.getModifiedPrice()));
         /*
         Log.w(LOG_TAG, "Modified price is :" + orderSummaryModel.getModifiedPrice());
@@ -98,7 +142,7 @@ public class OrderSummaryFragment extends Fragment {
             public void onClick(View v) {
 
                 LayoutInflater li = LayoutInflater.from(context);
-                View promptView = li.inflate(R.layout.order_summary_price_prompt, null);
+                View promptView = li.inflate(R.layout.price_prompt_order_summary, null);
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
@@ -192,9 +236,14 @@ public class OrderSummaryFragment extends Fragment {
     }
 
     public void refreshViews(){
-        modifiedPrice.setText(String.valueOf(orderSummaryModel.getModifiedPrice()));
-        totalPrice.setText(String.valueOf(orderSummaryModel.getTotalPrice()));
+        modifiedPrice.setText(String.format("%.1f",orderSummaryModel.getModifiedPrice()));
+        totalPrice.setText(String.format("%.1f",orderSummaryModel.getTotalPrice()));
         quantity.setText(String.valueOf(orderSummaryModel.getProductCount()));
+
+        if (orderSummaryModel.getOrderOfferApplied() == 1){
+            checkBox.setChecked(true);
+            orderSummaryAdapter.notifyDataSetChanged();
+        }
 
         orderSummaryAdapter.notifyDataSetChanged();
     }
@@ -245,6 +294,8 @@ public class OrderSummaryFragment extends Fragment {
             orderValues.put(OrdersEntry.COLUMN_ORDER_UPDATION_TIME, 0.0);
             orderValues.put(OrdersEntry.COLUMN_PRODUCT_COUNT, orderSummaryModel.getProductCount());
             orderValues.put(OrdersEntry.COLUMN_ORDER_ID, 1);
+            orderValues.put(OrdersEntry.COLUMN_ORDER_OFFER_APPLIED, orderSummaryModel.getOrderOfferApplied());
+            orderValues.put(OrdersEntry.COLUMN_ORDER_OFFER_ID, orderSummaryModel.getOrderOfferId());
 
             Uri insertedUri = context.getContentResolver().insert(OrdersEntry.INSERT_URI, orderValues);
 
@@ -255,6 +306,8 @@ public class OrderSummaryFragment extends Fragment {
 
             orderValues.put(OrdersEntry.COLUMN_TOTAL_PRICE, orderSummaryModel.getTotalPrice());
             orderValues.put(OrdersEntry.COLUMN_MODIFIED_PRICE, orderSummaryModel.getModifiedPrice());
+            orderValues.put(OrdersEntry.COLUMN_ORDER_OFFER_APPLIED, orderSummaryModel.getOrderOfferApplied());
+            orderValues.put(OrdersEntry.COLUMN_ORDER_OFFER_ID, orderSummaryModel.getOrderOfferId());
 
             orderValues.put(OrdersEntry.COLUMN_ORDER_UPDATION_TIME, nowTime);
             orderValues.put(OrdersEntry.COLUMN_PRODUCT_COUNT, orderSummaryModel.getProductCount());
@@ -291,6 +344,21 @@ public class OrderSummaryFragment extends Fragment {
                 orderItemValues.put(OrderItemsEntry.COLUMN_QUANTITY, tempQuantity);
                 orderItemValues.put(OrderItemsEntry.COLUMN_PRODUCT_ID, tempProductId);
                 orderItemValues.put(OrderItemsEntry.COLUMN_ORDER_ID, orderId);
+                orderItemValues.put(OrderItemsEntry.COLUMN_TOTAL_PRICE, buildOrderModel.getTotalPrice());
+                orderItemValues.put(OrderItemsEntry.COLUMN_EDITED_PRICE, buildOrderModel.getEditedPrice());
+
+                ArrayList<Integer> arrayList = new ArrayList<>();
+
+                List<ProductOffersModel> productOffersModelList = buildOrderModel.getProductOffers();
+
+                for (int j=0; j<productOffersModelList.size(); j++){
+                    ProductOffersModel productOffersModel = productOffersModelList.get(j);
+                    if (productOffersModel.getOfferApplied() == 1){
+                        arrayList.add(productOffersModel.getOfferId());
+                    }
+                }
+
+                orderItemValues.put(OrderItemsEntry.COLUMN_OFFERS_APPLIED, arrayList.toString());
 
                 cVVector.add(orderItemValues);
             }
@@ -329,6 +397,37 @@ public class OrderSummaryFragment extends Fragment {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    public void refreshOrderSummaryModel(){
+        int productCount = 0;
+        double totalPrice = 0.0;
+        double editedPrice = 0.0;
+
+        int listSize = buildOrderModelList.size();
+
+        BuildOrderModel buildOrderModel;
+
+        //orderSummaryModelList.clear();
+
+        for (int i = 0; i < listSize; i++){
+            buildOrderModel = buildOrderModelList.get(i);
+            if(buildOrderModel.getQuantity() > 0){
+                productCount = productCount + 1;
+                totalPrice = totalPrice + buildOrderModel.getTotalPrice();
+                editedPrice = editedPrice + buildOrderModel.getEditedPrice();
+                //orderSummaryModelList.add(buildOrderModel);
+            }
+        }
+
+        double discountPercent = orderSummaryModel.getDiscountPercent()/100;
+
+        double discountedTotalPrice = totalPrice*(1-discountPercent);
+        double discountedEditedPrice = editedPrice*(1-discountPercent);
+
+        orderSummaryModel.setProductCount(productCount);
+        orderSummaryModel.setTotalPrice(discountedEditedPrice);
+        orderSummaryModel.setModifiedPrice(discountedEditedPrice);
     }
 
 }
