@@ -1,6 +1,7 @@
 package com.bazara2z.distributorhelper.SplashScreenPackage;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -69,7 +70,9 @@ public class SplashScreen extends Activity {
 
         Context mContext = getApplicationContext();
 
-        Cursor cursor = mContext.getContentResolver().query(DistributorContract.UserEntry.CHECK_URI, columns,null,null,null);
+        ContentResolver contentResolver = mContext.getContentResolver();
+
+        Cursor cursor = contentResolver.query(DistributorContract.UserEntry.CHECK_URI, columns,null,null,null);
 
         if (cursor.getCount() > 0) {
 

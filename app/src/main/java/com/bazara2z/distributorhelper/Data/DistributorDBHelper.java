@@ -18,11 +18,11 @@ public class DistributorDBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static final String TYPE_INTEGER = " INTEGER";
+    public static final String TYPE_INTEGER = " INTEGER ";
     public static final String TYPE_INTEGER_PRIMARY_KEY = " INTEGER PRIMARY KEY ";
     public static final String AUTO_INCREMENT = " AUTOINCREMENT ";
-    public static final String TYPE_TEXT = " TEXT";
-    public static final String TYPE_REAL = " REAL";
+    public static final String TYPE_TEXT = " TEXT ";
+    public static final String TYPE_REAL = " REAL ";
     public static final String TYPE_UNIQUE = " UNIQUE ";
     public static final String IF_NOT_EXISTS = " IF NOT EXISTS ";
     public static final String COMMA_SEP = " , ";

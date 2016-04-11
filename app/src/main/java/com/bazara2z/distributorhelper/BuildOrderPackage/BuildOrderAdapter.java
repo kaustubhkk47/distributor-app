@@ -94,7 +94,7 @@ public class BuildOrderAdapter extends BaseAdapter {
         holder.editedPrice.setText(String.format("%.1f", buildOrderModel.getEditedPrice()));
         holder.id = position;
 
-        if (buildOrderModel.getProductOffersCount() >= 0) {
+        if (buildOrderModel.getProductOffersCount() > 0) {
             holder.offersLayout.setVisibility(View.VISIBLE);
             String offersText = "Offers(" + buildOrderModel.getProductOffersCount() + ")";
             holder.offers.setText(offersText);
