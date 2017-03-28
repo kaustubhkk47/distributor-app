@@ -146,7 +146,7 @@ public class SyncFunctions {
                         }
                     }
                 },
-                new Response.ErrorListener() {
+                    new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.w(LOG_TAG, error.toString());
@@ -1043,7 +1043,7 @@ public class SyncFunctions {
 
             String[] columns = {DistributorContract.RetailersEntry.TABLE_NAME + "." + DistributorContract.RetailersEntry.COLUMN_RETAILER_ID, DistributorContract.OrdersEntry.COLUMN_PRODUCT_COUNT,
                     DistributorContract.OrdersEntry.COLUMN_TOTAL_PRICE, DistributorContract.OrdersEntry.COLUMN_MODIFIED_PRICE,
-                    DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_ID, DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_ID};
+                    DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_APPLIED, DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_ID};
 
             String selection = DistributorContract.OrdersEntry.TABLE_NAME + "." + DistributorContract.OrdersEntry._ID + " = " + orderIds.get(i).toString() ;
 
@@ -1058,7 +1058,7 @@ public class SyncFunctions {
                 totalPrice = cursor.getDouble(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_TOTAL_PRICE));
                 modifiedPrice = cursor.getDouble(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_MODIFIED_PRICE));
                 orderOfferApplied = cursor.getInt(cursor.getColumnIndex(DistributorContract.OrdersEntry.COLUMN_ORDER_OFFER_APPLIED));
-                if (orderOfferApplied == 1){
+                if (orderOfferApplied == 0){
                     orderOffersString = "[]";
                 }
                 else {

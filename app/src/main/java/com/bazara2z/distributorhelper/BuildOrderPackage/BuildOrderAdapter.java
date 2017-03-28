@@ -41,7 +41,7 @@ public class BuildOrderAdapter extends BaseAdapter {
     public BuildOrderAdapter(Context context, List<BuildOrderModel> listData) {
         this.context = context;
         this.listData = listData;
-        layoutInflater = LayoutInflater.from(context);
+            layoutInflater = LayoutInflater.from(context);
     }
 
     @Override

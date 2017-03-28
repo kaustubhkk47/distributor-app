@@ -65,7 +65,7 @@ public class OrderSummaryAdapter extends BaseAdapter {
 
         holder.productName.setText(buildOrderModel.getProductName());
         holder.quantity.setText(String.valueOf(buildOrderModel.getQuantity()));
-        holder.totalPrice.setText(String.valueOf(buildOrderModel.getTotalPrice()));
+        holder.totalPrice.setText(String.format("%.1f",buildOrderModel.getEditedPrice()));
 
         holder.id = position;
         return convertView;

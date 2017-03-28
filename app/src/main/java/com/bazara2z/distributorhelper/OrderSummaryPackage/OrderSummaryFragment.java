@@ -128,6 +128,7 @@ public class OrderSummaryFragment extends Fragment {
 
                 }
                 refreshOrderSummaryModel();
+                refreshViews();
 
             }
         });
@@ -242,7 +243,7 @@ public class OrderSummaryFragment extends Fragment {
 
         if (orderSummaryModel.getOrderOfferApplied() == 1){
             checkBox.setChecked(true);
-            orderSummaryAdapter.notifyDataSetChanged();
+
         }
 
         orderSummaryAdapter.notifyDataSetChanged();
